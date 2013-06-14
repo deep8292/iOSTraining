@@ -22,7 +22,7 @@
     
     
     NSString *requestString = [[NSString alloc]init];
-    requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=%@&zoom=14&sensor=false&key=AIzaSyCT7FpXT78LPum0d9YwGFDgUvCcOqCmsSg",lat,lng,searchString];
+    requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?input=%@&location=%@,%@&radius=500&zoom=14&sensor=false&key=AIzaSyCT7FpXT78LPum0d9YwGFDgUvCcOqCmsSg",searchString,lat,lng];
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *URL = [NSURL URLWithString:requestString];
     

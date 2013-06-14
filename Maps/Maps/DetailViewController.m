@@ -55,21 +55,31 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id < MKAnnotation >)annotation
 {
-    static NSString *reuseId = @"StandardPin";
+    MKPinAnnotationView *pinAnnotation = nil;
     
-    MKPinAnnotationView *aView = (MKPinAnnotationView *)[mapView
-                                                         dequeueReusableAnnotationViewWithIdentifier:reuseId];
-    if (aView == nil)
+    if(annotation != mapView.userLocation)
     {
-        aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
-                                                 reuseIdentifier:reuseId];
-        aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        aView.canShowCallout = YES;
+        
+        static NSString *defaultPinID = @"myPin";
+        pinAnnotation = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:defaultPinID];
+        if ( pinAnnotation == nil )
+            pinAnnotation = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID];
+        
+       
+            pinAnnotation.image = [UIImage imageNamed:@"PinImageName.png"];
+            pinAnnotation.annotation = annotation;
+            pinAnnotation.canShowCallout = YES;
+            UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            
+            [infoButton addTarget:self
+                           action:@selector(showDetails)forControlEvents:UIControlEventTouchUpInside];
+            
+            pinAnnotation.rightCalloutAccessoryView = infoButton;
+        
     }
     
-    aView.annotation = annotation;
     
-    return aView;
+    return pinAnnotation;
 }
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
