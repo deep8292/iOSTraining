@@ -10,7 +10,10 @@
 }
 @property (strong,nonatomic)IBOutlet MKMapView *mapView;
 @property (strong,nonatomic)NSString *stringReference;
-@property (strong,nonatomic)IBOutlet UILabel *label;
 @property (strong,nonatomic)NSMutableString *latitudeString;
 @property (strong,nonatomic)NSMutableString *longitudeString;
+
+-(IBAction)restaurantsClicked:(id)sender;
+-(IBAction)coffeeShopsClicked:(id)sender;
+-(IBAction)mechanicsClicked:(id)sender;
 @end

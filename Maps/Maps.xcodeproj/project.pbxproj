@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		003EC447176EE28300FEC6E0 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 003EC445176EE28300FEC6E0 /* MapViewController.m */; };
+		003EC448176EE28300FEC6E0 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 003EC446176EE28300FEC6E0 /* MapViewController.xib */; };
+		003EC457176F1C3B00FEC6E0 /* MapDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 003EC455176F1C3B00FEC6E0 /* MapDetails.m */; };
+		003EC458176F1C3B00FEC6E0 /* MapDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 003EC456176F1C3B00FEC6E0 /* MapDetails.xib */; };
+		003EC45A176F388300FEC6E0 /* map_pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 003EC459176F388300FEC6E0 /* map_pin@2x.png */; };
+		003EC45C176F38BA00FEC6E0 /* map_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 003EC45B176F38BA00FEC6E0 /* map_pin.png */; };
 		004DA75A176AF9E6001CBB73 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 004DA759176AF9E6001CBB73 /* UIKit.framework */; };
 		004DA75C176AF9E6001CBB73 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 004DA75B176AF9E6001CBB73 /* Foundation.framework */; };
 		004DA75E176AF9E6001CBB73 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 004DA75D176AF9E6001CBB73 /* CoreGraphics.framework */; };
@@ -37,9 +43,6 @@
 		004DA7BE176AFAF5001CBB73 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA7B5176AFAF5001CBB73 /* UIImageView+AFNetworking.m */; };
 		004DA7C2176AFB79001CBB73 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA7C0176AFB79001CBB73 /* DetailViewController.m */; };
 		004DA7C3176AFB79001CBB73 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 004DA7C1176AFB79001CBB73 /* DetailViewController.xib */; };
-		004DA7C7176AFBC0001CBB73 /* MapDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA7C5176AFBC0001CBB73 /* MapDetails.m */; };
-		004DA7C8176AFBC0001CBB73 /* MapDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 004DA7C6176AFBC0001CBB73 /* MapDetails.xib */; };
-		004DA7CA176AFBC8001CBB73 /* map_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 004DA7C9176AFBC8001CBB73 /* map_pin.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		003EC444176EE28300FEC6E0 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		003EC445176EE28300FEC6E0 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		003EC446176EE28300FEC6E0 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		003EC454176F1C3A00FEC6E0 /* MapDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDetails.h; sourceTree = "<group>"; };
+		003EC455176F1C3B00FEC6E0 /* MapDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDetails.m; sourceTree = "<group>"; };
+		003EC456176F1C3B00FEC6E0 /* MapDetails.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetails.xib; sourceTree = "<group>"; };
+		003EC459176F388300FEC6E0 /* map_pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin@2x.png"; sourceTree = "<group>"; };
+		003EC45B176F38BA00FEC6E0 /* map_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin.png; sourceTree = "<group>"; };
 		004DA756176AF9E6001CBB73 /* Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		004DA759176AF9E6001CBB73 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		004DA75B176AF9E6001CBB73 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -101,10 +112,6 @@
 		004DA7BF176AFB79001CBB73 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		004DA7C0176AFB79001CBB73 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		004DA7C1176AFB79001CBB73 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
-		004DA7C4176AFBC0001CBB73 /* MapDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDetails.h; sourceTree = "<group>"; };
-		004DA7C5176AFBC0001CBB73 /* MapDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDetails.m; sourceTree = "<group>"; };
-		004DA7C6176AFBC0001CBB73 /* MapDetails.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapDetails.xib; sourceTree = "<group>"; };
-		004DA7C9176AFBC8001CBB73 /* map_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +143,6 @@
 		004DA74D176AF9E6001CBB73 = {
 			isa = PBXGroup;
 			children = (
-				004DA799176AFA2C001CBB73 /* CoreLocation.framework */,
-				004DA797176AFA25001CBB73 /* MapKit.framework */,
 				004DA75F176AF9E6001CBB73 /* Maps */,
 				004DA786176AF9E6001CBB73 /* MapsTests */,
 				004DA758176AF9E6001CBB73 /* Frameworks */,
@@ -157,6 +162,8 @@
 		004DA758176AF9E6001CBB73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				004DA799176AFA2C001CBB73 /* CoreLocation.framework */,
+				004DA797176AFA25001CBB73 /* MapKit.framework */,
 				004DA759176AF9E6001CBB73 /* UIKit.framework */,
 				004DA75B176AF9E6001CBB73 /* Foundation.framework */,
 				004DA75D176AF9E6001CBB73 /* CoreGraphics.framework */,
@@ -175,13 +182,17 @@
 				004DA771176AF9E6001CBB73 /* ViewController.h */,
 				004DA772176AF9E6001CBB73 /* ViewController.m */,
 				004DA774176AF9E6001CBB73 /* ViewController_iPhone.xib */,
+				003EC444176EE28300FEC6E0 /* MapViewController.h */,
+				003EC445176EE28300FEC6E0 /* MapViewController.m */,
+				003EC446176EE28300FEC6E0 /* MapViewController.xib */,
 				004DA7BF176AFB79001CBB73 /* DetailViewController.h */,
 				004DA7C0176AFB79001CBB73 /* DetailViewController.m */,
 				004DA7C1176AFB79001CBB73 /* DetailViewController.xib */,
-				004DA7C4176AFBC0001CBB73 /* MapDetails.h */,
-				004DA7C5176AFBC0001CBB73 /* MapDetails.m */,
-				004DA7C6176AFBC0001CBB73 /* MapDetails.xib */,
-				004DA7C9176AFBC8001CBB73 /* map_pin.png */,
+				003EC454176F1C3A00FEC6E0 /* MapDetails.h */,
+				003EC455176F1C3B00FEC6E0 /* MapDetails.m */,
+				003EC456176F1C3B00FEC6E0 /* MapDetails.xib */,
+				003EC45B176F38BA00FEC6E0 /* map_pin.png */,
+				003EC459176F388300FEC6E0 /* map_pin@2x.png */,
 				004DA760176AF9E6001CBB73 /* Supporting Files */,
 			);
 			path = Maps;
@@ -340,8 +351,10 @@
 				004DA770176AF9E6001CBB73 /* Default-568h@2x.png in Resources */,
 				004DA776176AF9E6001CBB73 /* ViewController_iPhone.xib in Resources */,
 				004DA7C3176AFB79001CBB73 /* DetailViewController.xib in Resources */,
-				004DA7C8176AFBC0001CBB73 /* MapDetails.xib in Resources */,
-				004DA7CA176AFBC8001CBB73 /* map_pin.png in Resources */,
+				003EC448176EE28300FEC6E0 /* MapViewController.xib in Resources */,
+				003EC458176F1C3B00FEC6E0 /* MapDetails.xib in Resources */,
+				003EC45A176F388300FEC6E0 /* map_pin@2x.png in Resources */,
+				003EC45C176F38BA00FEC6E0 /* map_pin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +403,8 @@
 				004DA7BD176AFAF5001CBB73 /* AFXMLRequestOperation.m in Sources */,
 				004DA7BE176AFAF5001CBB73 /* UIImageView+AFNetworking.m in Sources */,
 				004DA7C2176AFB79001CBB73 /* DetailViewController.m in Sources */,
-				004DA7C7176AFBC0001CBB73 /* MapDetails.m in Sources */,
+				003EC447176EE28300FEC6E0 /* MapViewController.m in Sources */,
+				003EC457176F1C3B00FEC6E0 /* MapDetails.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +589,7 @@
 				004DA793176AF9E6001CBB73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		004DA794176AF9E6001CBB73 /* Build configuration list for PBXNativeTarget "MapsTests" */ = {
 			isa = XCConfigurationList;
@@ -583,6 +598,7 @@
 				004DA796176AF9E6001CBB73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
