@@ -139,7 +139,11 @@
     
     self.coffeeShopsArray = [[NSMutableArray alloc]init];
     
-    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=restaurant&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=coffee shops&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
+    
+    requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Request String:%@",requestString);
     
     NSURL *URL = [NSURL URLWithString:requestString];
     
@@ -162,7 +166,7 @@
     
     self.mechanicsArray = [[NSMutableArray alloc]init];
     
-    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=restaurant&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=mechanic&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
     
     NSURL *URL = [NSURL URLWithString:requestString];
     
