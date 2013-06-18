@@ -24,14 +24,14 @@
     
     NSString *requestString = [[NSString alloc]init];
     
-    requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&location=%@,%@&&radius=500&language=fr&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",searchString,lat,lng];
+    requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&location=%@,%@&&radius=33000&language=fr&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",searchString,lat,lng];
 
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *URL = [NSURL URLWithString:requestString];
     
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
     
-//    NSLog(@"Request URL: %@",requestURL);
+    NSLog(@"Request URL: %@",requestURL);
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
         
@@ -139,7 +139,7 @@
     
     self.coffeeShopsArray = [[NSMutableArray alloc]init];
     
-    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=coffee shops&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=barista&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
     
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
