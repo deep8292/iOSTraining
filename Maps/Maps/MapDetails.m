@@ -4,7 +4,7 @@
 
 @interface MapDetails ()
 @property(strong,nonatomic)MKMapView *mapView;
-
+@property (strong,nonatomic)UIActivityIndicatorView *spinner;
 @end
 
 @implementation MapDetails
@@ -22,37 +22,48 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.hidden = FALSE;
+    
+    self.spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinner.hidesWhenStopped = YES;
+    self.spinner.frame = CGRectMake(0, 44, 320, 480);
+    [self.view addSubview:_spinner];
+    [self.spinner startAnimating];
+    
     self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, 0, 300, 250)];
+    self.mapView.showsUserLocation = YES;
     
     self.mapView.delegate = self;
     
     self.groupedTableView.delegate = self;
     self.groupedTableView.dataSource = self;
     
-    [self showOnMap];
+    [[RequestHandler sharedRquest]detailList:self.stringReference];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showOnMap) name:@"showList" object:nil];
 }
 
 
 -(void)showOnMap{
     sharedRequest = [RequestHandler sharedRquest];
     
-    CLLocationCoordinate2D coord =  {self.latitude,self.longitude};
+    [_mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
+
+    double latitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"]doubleValue];
+    double longitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"]doubleValue];
+    
+    CLLocationCoordinate2D coord =  {latitude,longitude};
     
     MKPointAnnotation *pin =[[MKPointAnnotation alloc]init];
     
     pin.coordinate = coord;
-    pin.title = self.nameString;
+    pin.title = [sharedRequest.detailArray valueForKey:@"name" ];
     [self.mapView addAnnotation:pin];
-}
-
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    sharedRequest = [RequestHandler sharedRquest];
     
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 30000, 30000);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+    [self.groupedTableView reloadData];
     
-    [mapView setCenterCoordinate:mapView.userLocation.location.coordinate animated:YES];
+    [self.spinner stopAnimating
+     ];
 }
 
 
@@ -112,7 +123,7 @@
     {
         if (indexPath.row == 0)
         {
-            cell.textLabel.text = [NSString stringWithFormat:@"Name: %@",self.nameString];
+            cell.textLabel.text = [NSString stringWithFormat:@"Name: %@",[sharedRequest.detailArray valueForKey:@"name" ]];
         }
         else if (indexPath.row == 1){
             [cell addSubview:self.mapView];
@@ -123,8 +134,8 @@
     {
         NSString *str = [NSString stringWithFormat:@"%@",sharedRequest.ratings];
         
-        if([str isEqual: @""]){
-            cell.textLabel.text = [NSString stringWithFormat:@"Ratings: 0"];
+        if([str isEqualToString:@"(null)"]){
+            cell.textLabel.text = [NSString stringWithFormat:@"Ratings: Not Rated yet"];
         }
         else{
              cell.textLabel.text = [NSString stringWithFormat:@"Ratings: %@",sharedRequest.ratings];

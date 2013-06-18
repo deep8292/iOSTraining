@@ -177,17 +177,12 @@
 			children = (
 				004DA7A1176AFAF5001CBB73 /* Externals */,
 				004DA79E176AFA71001CBB73 /* Request */,
+				0096291617705FB100D95068 /* Map Details */,
 				004DA768176AF9E6001CBB73 /* AppDelegate.h */,
 				004DA769176AF9E6001CBB73 /* AppDelegate.m */,
 				004DA771176AF9E6001CBB73 /* ViewController.h */,
 				004DA772176AF9E6001CBB73 /* ViewController.m */,
 				004DA774176AF9E6001CBB73 /* ViewController_iPhone.xib */,
-				003EC444176EE28300FEC6E0 /* MapViewController.h */,
-				003EC445176EE28300FEC6E0 /* MapViewController.m */,
-				003EC446176EE28300FEC6E0 /* MapViewController.xib */,
-				004DA7BF176AFB79001CBB73 /* DetailViewController.h */,
-				004DA7C0176AFB79001CBB73 /* DetailViewController.m */,
-				004DA7C1176AFB79001CBB73 /* DetailViewController.xib */,
 				003EC454176F1C3A00FEC6E0 /* MapDetails.h */,
 				003EC455176F1C3B00FEC6E0 /* MapDetails.m */,
 				003EC456176F1C3B00FEC6E0 /* MapDetails.xib */,
@@ -272,6 +267,19 @@
 				004DA7B5176AFAF5001CBB73 /* UIImageView+AFNetworking.m */,
 			);
 			path = "AF Networking";
+			sourceTree = "<group>";
+		};
+		0096291617705FB100D95068 /* Map Details */ = {
+			isa = PBXGroup;
+			children = (
+				003EC444176EE28300FEC6E0 /* MapViewController.h */,
+				003EC445176EE28300FEC6E0 /* MapViewController.m */,
+				003EC446176EE28300FEC6E0 /* MapViewController.xib */,
+				004DA7BF176AFB79001CBB73 /* DetailViewController.h */,
+				004DA7C0176AFB79001CBB73 /* DetailViewController.m */,
+				004DA7C1176AFB79001CBB73 /* DetailViewController.xib */,
+			);
+			name = "Map Details";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

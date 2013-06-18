@@ -10,4 +10,5 @@
 @property(strong,nonatomic)NSString* nameString;
 @property(nonatomic)double latitude;
 @property(nonatomic)double longitude;
+@property(strong,nonatomic)NSMutableString *stringReference;
 @end

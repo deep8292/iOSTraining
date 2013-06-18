@@ -22,6 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.hidden = FALSE;
+    
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = TRUE;
     

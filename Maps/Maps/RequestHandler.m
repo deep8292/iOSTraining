@@ -66,6 +66,8 @@
         
         self.ratings = [[JSON objectForKey:@"result"]objectForKey:@"rating"];
         
+        NSLog(@"%@",self.detailArray);
+        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"showList" object:nil];
         
     }failure:^(NSURLRequest *requestURL,NSHTTPURLResponse *response,NSError *error, id JSON){

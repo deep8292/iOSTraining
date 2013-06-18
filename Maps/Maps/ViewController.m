@@ -12,6 +12,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [_searchBar resignFirstResponder];
+    self.navigationController.navigationBar.hidden = TRUE;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
@@ -24,6 +25,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.hidden = TRUE;
     
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -66,21 +69,23 @@
     
     restaurantButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [restaurantButton setTitle:@"Restaurants" forState:UIControlStateNormal];
-    restaurantButton.frame = CGRectMake(7, 460, 100, 40);
+    restaurantButton.frame = CGRectMake(7, 500, 100, 40);
     [self.view addSubview:restaurantButton];
     [restaurantButton addTarget:self action:@selector(restaurantButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
+    restaurantButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     coffeshopButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [coffeshopButton setTitle:@"Coffee Shops" forState:UIControlStateNormal];
-    coffeshopButton.frame = CGRectMake(117, 460, 100, 40);
+    coffeshopButton.frame = CGRectMake(117, 500, 100, 40);
     [self.view addSubview:coffeshopButton];
-     [coffeshopButton addTarget:self action:@selector(coffeeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [coffeshopButton addTarget:self action:@selector(coffeeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    coffeshopButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     mechanicButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [mechanicButton setTitle:@"Mechanics" forState:UIControlStateNormal];
-    mechanicButton.frame = CGRectMake(227, 460, 90, 40);
+    mechanicButton.frame = CGRectMake(227, 500, 90, 40);
     [self.view addSubview:mechanicButton];
+    mechanicButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 }
 
 #pragma mark - Restaurants button clicked
@@ -229,25 +234,13 @@
     return pinView;
 }
 
-
-//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
-//    
-//    sharedRequest = [RequestHandler sharedRquest];
-//    
-//    MapDetails *map = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
-//    
-//    map.nameString =  [sharedRequest.detailArray valueForKey:@"name"];
-//    
-//    map.latitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"]doubleValue];
-//    map.longitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"]doubleValue];
-//    
-//    [self.navigationController pushViewController:map animated:YES];
-//}
-
 #pragma mark - Search Bar
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar
 {   self.table.hidden = FALSE;
+    restaurantButton.hidden = TRUE;
+    coffeshopButton.hidden = TRUE;
+    mechanicButton.hidden = TRUE;
     self.mapView.hidden = TRUE;
     
     _table.scrollEnabled = NO;
@@ -263,6 +256,9 @@
     [self.searchBar resignFirstResponder];
     self.table.hidden = TRUE;
     self.mapView.hidden = FALSE;
+    restaurantButton.hidden = FALSE;
+    coffeshopButton.hidden = FALSE;
+    mechanicButton.hidden = FALSE;
 }
 
 
@@ -327,13 +323,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MapViewController *mapDetails = [[MapViewController alloc]initWithNibName:@"MapViewController" bundle:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    MapDetails *mapDetails = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
 
     mapDetails.stringReference = [[sharedRequest.dataArray objectAtIndex:indexPath.row]objectForKey:@"reference"];
+    
+    NSLog(@"%@",mapDetails.stringReference);
 
     [self.navigationController pushViewController:mapDetails animated:YES];
-
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
