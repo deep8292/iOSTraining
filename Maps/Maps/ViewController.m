@@ -10,6 +10,17 @@
 
 @implementation ViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [_searchBar resignFirstResponder];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    
+    self.latitudeString = [[NSMutableString alloc]initWithFormat:@"%f",newLocation.coordinate.latitude];
+    self.longitudeString = [[NSMutableString alloc]initWithFormat:@"%f",newLocation.coordinate.longitude];
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -34,26 +45,142 @@
     
     self.table.hidden = TRUE;
     
-    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 44, 320, 560)];
+    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 44, 320, 450)];
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
     self.mapView.showsUserLocation = YES;
     self.mapView.delegate = self;
     
+    [self creatingButtons];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"Doreload" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showOnMap) name:@"showAllData" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showDetail) name:@"showList" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showRestaurantData) name:@"Restaurant" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showCoffeeShopData) name:@"CoffeeShop" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showMechanicData) name:@"Mechanics" object:nil];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [_searchBar resignFirstResponder];
+#pragma mark -Adding buttons
+-(void)creatingButtons{
+    
+    restaurantButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [restaurantButton setTitle:@"Restaurants" forState:UIControlStateNormal];
+    restaurantButton.frame = CGRectMake(7, 460, 100, 40);
+    [self.view addSubview:restaurantButton];
+    [restaurantButton addTarget:self action:@selector(restaurantButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    coffeshopButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [coffeshopButton setTitle:@"Coffee Shops" forState:UIControlStateNormal];
+    coffeshopButton.frame = CGRectMake(117, 460, 100, 40);
+    [self.view addSubview:coffeshopButton];
+     [coffeshopButton addTarget:self action:@selector(coffeeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    mechanicButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [mechanicButton setTitle:@"Mechanics" forState:UIControlStateNormal];
+    mechanicButton.frame = CGRectMake(227, 460, 90, 40);
+    [self.view addSubview:mechanicButton];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+#pragma mark - Restaurants button clicked
+-(void)restaurantButtonClicked{
+    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
     
-    self.latitudeString = [[NSMutableString alloc]initWithFormat:@"%f",newLocation.coordinate.latitude];
-    self.longitudeString = [[NSMutableString alloc]initWithFormat:@"%f",newLocation.coordinate.longitude];
+    [ _mapView removeAnnotations:annotationsToRemove] ;
     
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    [_spinner startAnimating];
+    
+    [[RequestHandler sharedRquest]restaurantsResults:self.latitudeString longitude:self.longitudeString];
+}
+
+-(void)showRestaurantData{
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    for (int i = 0; i <[sharedRequest.restautrantsArray count]; i++)
+    {
+        NSMutableDictionary *location  = [[[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
+        double lat = [[location objectForKey:@"lat"]doubleValue];
+        double lng = [[location objectForKey:@"lng"]doubleValue];
+        
+        CLLocationCoordinate2D coord = {lat,lng};
+        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+        point.coordinate = coord;
+        point.title = [[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"name"];
+        [self.mapView addAnnotation:point];
+        
+        [_spinner stopAnimating];
+    }
+
+}
+
+#pragma mark - Coffee button clicked
+-(void)coffeeButtonClicked{
+    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
+    
+    [ _mapView removeAnnotations:annotationsToRemove] ;
+    
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    [_spinner startAnimating];
+    
+    [[RequestHandler sharedRquest]coffeeShopsResults:self.latitudeString longitude:self.longitudeString];
+}
+
+-(void)showCoffeeShopData{
+    
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    for (int i = 0; i <[sharedRequest.coffeeShopsArray count]; i++)
+    {
+        NSMutableDictionary *location  = [[[sharedRequest.coffeeShopsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
+        double lat = [[location objectForKey:@"lat"]doubleValue];
+        double lng = [[location objectForKey:@"lng"]doubleValue];
+        
+        CLLocationCoordinate2D coord = {lat,lng};
+        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+        point.coordinate = coord;
+        point.title = [[sharedRequest.coffeeShopsArray objectAtIndex:i]objectForKey:@"name"];
+        [self.mapView addAnnotation:point];
+        
+        [_spinner stopAnimating];
+    }
+}
+
+#pragma mark - Mechanic button clicked
+-(void)mechanicButtonClicked{
+    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
+    
+    [ _mapView removeAnnotations:annotationsToRemove] ;
+    
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    [_spinner startAnimating];
+    
+    [[RequestHandler sharedRquest]mechanicsData:self.latitudeString longitude:self.longitudeString];
+}
+
+-(void)showMechanicData{
+    
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    for (int i = 0; i <[sharedRequest.mechanicsArray count]; i++)
+    {
+        NSMutableDictionary *location  = [[[sharedRequest.mechanicsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
+        double lat = [[location objectForKey:@"lat"]doubleValue];
+        double lng = [[location objectForKey:@"lng"]doubleValue];
+        
+        CLLocationCoordinate2D coord = {lat,lng};
+        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+        point.coordinate = coord;
+        point.title = [[sharedRequest.mechanicsArray objectAtIndex:i]objectForKey:@"name"];
+        [self.mapView addAnnotation:point];
+        
+        [_spinner stopAnimating];
+    }
+
 }
 
 #pragma mark - Map 
@@ -102,28 +229,20 @@
     return pinView;
 }
 
--(void)showDetail{
-    
-    NSString *str = [[NSString alloc]init];
-    
-    str = [sharedRequest.detailArray valueForKey:@"name"];
-    
-    NSLog(@"%@",str);
-}
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    MapDetails *map = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
-    
-    map.nameString =  [sharedRequest.detailArray valueForKey:@"name"];
-    
-    map.latitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"]doubleValue];
-    map.longitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"]doubleValue];
-    
-    [self.navigationController pushViewController:map animated:YES];
-}
+//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+//    
+//    sharedRequest = [RequestHandler sharedRquest];
+//    
+//    MapDetails *map = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
+//    
+//    map.nameString =  [sharedRequest.detailArray valueForKey:@"name"];
+//    
+//    map.latitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"]doubleValue];
+//    map.longitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"]doubleValue];
+//    
+//    [self.navigationController pushViewController:map animated:YES];
+//}
 
 #pragma mark - Search Bar
 

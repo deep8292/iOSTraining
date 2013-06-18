@@ -5,6 +5,7 @@
 @interface ViewController : UIViewController<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,MKMapViewDelegate>
 {RequestHandler *sharedRequest;
     CLLocationManager *locationManager;
+    UIButton *restaurantButton,*coffeshopButton,*mechanicButton;
 }
 @property (strong,nonatomic)MKMapView *mapView;
 @property (strong,nonatomic)IBOutlet UISearchBar *searchBar;
@@ -14,5 +15,5 @@
 @property (strong,nonatomic)NSMutableString *latitudeString;
 @property (strong,nonatomic)NSMutableString *longitudeString;
 
--(IBAction)cacelClicked:(id)sender;
+
 @end
