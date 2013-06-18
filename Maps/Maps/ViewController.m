@@ -39,7 +39,6 @@
     self.spinner.hidesWhenStopped = YES;
     self.spinner.frame = CGRectMake(0, 44, 320, 480);
     [self.view addSubview:_spinner];
-//    [_spinner startAnimating];
     
     //Table View and Search Delegates
     _table.delegate=self;
@@ -103,6 +102,8 @@
 
 -(void)showRestaurantData{
     sharedRequest = [RequestHandler sharedRquest];
+    
+    [_spinner startAnimating];
     
     for (int i = 0; i <[sharedRequest.restautrantsArray count]; i++)
     {

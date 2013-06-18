@@ -24,7 +24,7 @@
     
     NSString *requestString = [[NSString alloc]init];
     
-    requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&location=%@,%@&&radius=33000&language=fr&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",searchString,lat,lng];
+    requestString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&location=%@,%@&&radius=33000&language=fr&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",searchString,lat,lng];
 
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *URL = [NSURL URLWithString:requestString];
@@ -52,7 +52,7 @@
 {
     _detailArray = [[NSMutableArray alloc]init];
     
-    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",searchString];
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",searchString];
     
     NSURL *URL = [NSURL URLWithString:requestString];
     
@@ -86,7 +86,7 @@
     
     for (int i = 0; i<[self.referenceNameArray count]; i++)
     {
-        NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",[self.referenceNameArray objectAtIndex:i]];
+        NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",[self.referenceNameArray objectAtIndex:i]];
         
         NSURL *URL = [NSURL URLWithString:requestString];
         NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
@@ -116,7 +116,7 @@
     
     self.restautrantsArray = [[NSMutableArray alloc]init];
     
-    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=restaurant&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%@,%@&radius=500&types=restaurant&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",lat,lng];
     
     NSURL *URL = [NSURL URLWithString:requestString];
     
@@ -141,7 +141,7 @@
     
     self.coffeeShopsArray = [[NSMutableArray alloc]init];
     
-    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants&location=%@,%@&radius=33000&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants&location=%@,%@&radius=33000&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",lat,lng];
     
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -168,7 +168,7 @@
     
     self.mechanicsArray = [[NSMutableArray alloc]init];
     
-    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=mechanics&location=%@,%@&radius=33000&sensor=true&key=AIzaSyDf7hO-iFifAJAmc3v_2pKAgVqeBVR3rsg",lat,lng];
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=mechanics&location=%@,%@&radius=33000&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",lat,lng];
     
     NSURL *URL = [NSURL URLWithString:requestString];
     
