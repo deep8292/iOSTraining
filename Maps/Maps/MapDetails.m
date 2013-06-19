@@ -4,7 +4,13 @@
 
 @interface MapDetails ()
 @property(strong,nonatomic)MKMapView *mapView;
-@property (strong,nonatomic)UIActivityIndicatorView *spinner;
+@property(strong,nonatomic)NSMutableArray *reviewArray;
+@property(strong,nonatomic)NSMutableString *name;
+@property(strong,nonatomic)NSMutableString *reviews;
+@property(strong,nonatomic)UIActivityIndicatorView *spinner;
+@property(strong,nonatomic)NSMutableArray *nameArray;
+@property(strong,nonatomic)NSMutableArray *arrayOfReviews;
+@property(strong,nonatomic)NSMutableArray *timeStamp;
 @end
 
 @implementation MapDetails
@@ -31,8 +37,6 @@
     [self.spinner startAnimating];
     
     self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, 0, 300, 250)];
-    self.mapView.showsUserLocation = YES;
-    
     self.mapView.delegate = self;
     
     self.groupedTableView.delegate = self;
@@ -47,10 +51,20 @@
 -(void)showOnMap{
     sharedRequest = [RequestHandler sharedRquest];
     
-    [_mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
-
+   
     double latitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"]doubleValue];
     double longitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"]doubleValue];
+    
+    self.name  = [sharedRequest.detailArray valueForKey:@"name" ];
+    
+    self.reviewArray = [sharedRequest.detailArray valueForKey:@"reviews"];
+    
+    self.nameArray = [self.reviewArray valueForKey:@"author_name"];
+    
+    self.arrayOfReviews = [self.reviewArray valueForKey:@"text"];
+    
+   self.timeStamp = [self.reviewArray valueForKey:@"time"];
+    
     
     CLLocationCoordinate2D coord =  {latitude,longitude};
     
@@ -60,6 +74,15 @@
     pin.title = [sharedRequest.detailArray valueForKey:@"name" ];
     [self.mapView addAnnotation:pin];
     
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.03f, 0.03f);
+    
+    MKCoordinateRegion region;
+    
+    region.center = coord;
+    region.span =span;
+    
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+       
     [self.groupedTableView reloadData];
     
     [self.spinner stopAnimating
@@ -86,7 +109,12 @@
         return 2;
     }
     else if (section == 1){
-        return 1;
+        if ([self.reviewArray count]>0) {
+            return [self.reviewArray count];
+        }
+        else{
+            return 1;
+        }
     }
     else{
         return 0;
@@ -106,7 +134,12 @@
         }
     }
     else if (indexPath.section == 1){
-        return 44.0f;
+        if ([self.reviewArray count]>0) {
+            return 100.0f;}
+        else{
+            return 44.0f;
+            
+        }
     }
     else{return 0;}
     
@@ -116,36 +149,62 @@
     
     static NSString *cellID =@"Cell Identifier";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
+//    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+//    }
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    
     if (indexPath.section == 0)
     {
         if (indexPath.row == 0)
         {
-            cell.textLabel.text = [NSString stringWithFormat:@"Name: %@",[sharedRequest.detailArray valueForKey:@"name" ]];
+            cell.textLabel.text = self.name;
         }
         else if (indexPath.row == 1){
             [cell addSubview:self.mapView];
             
         }
     }
-    else if (indexPath.section == 1)
-    {
-        NSString *str = [NSString stringWithFormat:@"%@",sharedRequest.ratings];
-        
-        if([str isEqualToString:@"(null)"]){
-            cell.textLabel.text = [NSString stringWithFormat:@"Ratings: Not Rated yet"];
-        }
-        else{
-             cell.textLabel.text = [NSString stringWithFormat:@"Ratings: %@",sharedRequest.ratings];
-        }
-    }
     else{
         
+        if ([self.reviewArray count]>0) {
+            UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, -17, 120, 50)];
+            nameLabel.font = [UIFont systemFontOfSize:10.0f];
+            nameLabel.backgroundColor = [UIColor clearColor];
+            nameLabel.text = [self.nameArray objectAtIndex:indexPath.row];
+            
+            [cell addSubview:nameLabel];
+            
+            UILabel *review = [[UILabel alloc]initWithFrame:CGRectMake(13,0 , 250, 100)];
+            review.font = [UIFont systemFontOfSize:8.0f];
+            review.backgroundColor = [UIColor clearColor];
+            NSString *str = [[NSString alloc]initWithFormat:@"%@",[self.arrayOfReviews objectAtIndex:indexPath.row]];
+            str = [str stringByReplacingOccurrencesOfString:@"&#39;" withString:@"'"];
+            review.text = str;
+            review.numberOfLines =6;
+            [cell addSubview:review];
+            
+            UILabel *timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, 90, 100, 10)];
+            timeLabel.backgroundColor = [UIColor clearColor];
+            timeLabel.font = [UIFont italicSystemFontOfSize:8.0f];
+            timeLabel.textColor = [UIColor grayColor];
+            double timeStampVal = [[self.timeStamp objectAtIndex:indexPath.row]doubleValue];
+            NSTimeInterval timestamp = (NSTimeInterval)timeStampVal;
+            NSDate *updatetimestamp = [NSDate dateWithTimeIntervalSince1970:timestamp];
+            timeLabel.text = [NSString stringWithFormat:@"%@",updatetimestamp];
+            [cell addSubview:timeLabel];
+
+        }
+        else{
+            cell.textLabel.text = @"No Reviews yet";
+        }
     }
-    
+
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

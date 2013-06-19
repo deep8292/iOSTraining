@@ -6,6 +6,7 @@
 @interface ViewController ()
 @property (strong,nonatomic)UIActivityIndicatorView *spinner;
 @property (strong,nonatomic)NSString *referenceString;
+@property (strong,nonatomic)NSString *titleName;
 @end
 
 @implementation ViewController
@@ -84,6 +85,7 @@
     [mechanicButton setTitle:@"Mechanics" forState:UIControlStateNormal];
     mechanicButton.frame = CGRectMake(227, 500, 90, 40);
     [self.view addSubview:mechanicButton];
+    [mechanicButton addTarget:self action:@selector(mechanicButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     mechanicButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 }
 
@@ -229,11 +231,32 @@
         pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:annotationID];
         pinView.canShowCallout = YES;
         pinView.image = [UIImage imageNamed:@"map_pin.png"];
-//        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     }
     
     return pinView;
 }
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+    
+   MKPointAnnotation *point = [self.mapView.selectedAnnotations objectAtIndex:[self.mapView.selectedAnnotations count]-1];
+    
+    self.titleName = [NSString stringWithFormat:@"%@",point.title];
+    
+    NSLog(@"%@",_titleName);
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+    
+    MapDetails *map = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
+    
+    map.nameString = self.titleName;
+    
+    NSLog(@"%@ ",map.nameString);
+    
+    [self.navigationController pushViewController:map animated:YES];
+}
+
 
 #pragma mark - Search Bar
 
@@ -272,14 +295,12 @@
     [self.spinner startAnimating];
     
     self.mapView.hidden = FALSE;
+    restaurantButton.hidden = FALSE;
+    coffeshopButton.hidden =FALSE;
+    mechanicButton.hidden = FALSE;
     
     [self.searchBar resignFirstResponder];
     
-//    [_searchBar resignFirstResponder];
-//    
-//    DetailViewController *details = [[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil];
-//    
-//    [self.navigationController pushViewController:details animated:YES];
 }
 
 #pragma mark - Getting keyword from Search Bar
@@ -316,7 +337,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     cell.textLabel.text = [[sharedRequest.dataArray objectAtIndex:indexPath.row]objectForKey:@"description"];
     
     return cell;
