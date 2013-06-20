@@ -99,105 +99,105 @@
     [mapView setCenterCoordinate:mapView.userLocation.location.coordinate animated:YES];
 }
 
-#pragma mark - Restaurants
--(IBAction)restaurantsClicked:(id)sender{
-    
-    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
-    
-    [ _mapView removeAnnotations:annotationsToRemove] ;
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    [_spinner startAnimating];
-    
-    [[RequestHandler sharedRquest]restaurantsResults:self.latitudeString longitude:self.longitudeString];
-}
-
--(void)showRestaurantData{
-    
-     sharedRequest = [RequestHandler sharedRquest];
-    
-    for (int i = 0; i <[sharedRequest.restautrantsArray count]; i++)
-    {
-        NSMutableDictionary *location  = [[[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
-        double lat = [[location objectForKey:@"lat"]doubleValue];
-        double lng = [[location objectForKey:@"lng"]doubleValue];
-        
-        CLLocationCoordinate2D coord = {lat,lng};
-        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
-        point.coordinate = coord;
-        point.title = [[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"name"];
-        [self.mapView addAnnotation:point];
-        
-         [_spinner stopAnimating];
-    }
-}
-
-#pragma mark - CoffeeShops
--(IBAction)coffeeShopsClicked:(id)sender{
-    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
-    
-    [ _mapView removeAnnotations:annotationsToRemove] ;
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    [_spinner startAnimating];
-    
-    [[RequestHandler sharedRquest]coffeeShopsResults:self.latitudeString longitude:self.longitudeString];
-}
-
--(void)showCoffeeShopData{
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    for (int i = 0; i <[sharedRequest.coffeeShopsArray count]; i++)
-    {
-        NSMutableDictionary *location  = [[[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
-        double lat = [[location objectForKey:@"lat"]doubleValue];
-        double lng = [[location objectForKey:@"lng"]doubleValue];
-        
-        CLLocationCoordinate2D coord = {lat,lng};
-        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
-        point.coordinate = coord;
-        point.title = [[sharedRequest.coffeeShopsArray objectAtIndex:i]objectForKey:@"name"];
-        [self.mapView addAnnotation:point];
-        
-        [_spinner stopAnimating];
-    }
-}
-
-#pragma mark - Mechanics
--(IBAction)mechanicsClicked:(id)sender{
-    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
-    
-    [ _mapView removeAnnotations:annotationsToRemove] ;
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    [_spinner startAnimating];
-    
-    [[RequestHandler sharedRquest]mechanicsData:self.latitudeString longitude:self.longitudeString];
-}
-
--(void)showMechanicsData{
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    for (int i = 0; i <[sharedRequest.mechanicsArray count]; i++)
-    {
-        NSMutableDictionary *location  = [[[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
-        double lat = [[location objectForKey:@"lat"]doubleValue];
-        double lng = [[location objectForKey:@"lng"]doubleValue];
-        
-        CLLocationCoordinate2D coord = {lat,lng};
-        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
-        point.coordinate = coord;
-        point.title = [[sharedRequest.mechanicsArray objectAtIndex:i]objectForKey:@"name"];
-        [self.mapView addAnnotation:point];
-        
-        [_spinner stopAnimating];
-    }
-}
+//#pragma mark - Restaurants
+//-(IBAction)restaurantsClicked:(id)sender{
+//    
+//    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
+//    
+//    [ _mapView removeAnnotations:annotationsToRemove] ;
+//    
+//    sharedRequest = [RequestHandler sharedRquest];
+//    
+//    [_spinner startAnimating];
+//    
+//    [[RequestHandler sharedRquest]restaurantsResults:self.latitudeString longitude:self.longitudeString];
+//}
+//
+//-(void)showRestaurantData{
+//    
+//     sharedRequest = [RequestHandler sharedRquest];
+//    
+//    for (int i = 0; i <[sharedRequest.restautrantsArray count]; i++)
+//    {
+//        NSMutableDictionary *location  = [[[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
+//        double lat = [[location objectForKey:@"lat"]doubleValue];
+//        double lng = [[location objectForKey:@"lng"]doubleValue];
+//        
+//        CLLocationCoordinate2D coord = {lat,lng};
+//        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+//        point.coordinate = coord;
+//        point.title = [[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"name"];
+//        [self.mapView addAnnotation:point];
+//        
+//         [_spinner stopAnimating];
+//    }
+//}
+//
+//#pragma mark - CoffeeShops
+//-(IBAction)coffeeShopsClicked:(id)sender{
+//    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
+//    
+//    [ _mapView removeAnnotations:annotationsToRemove] ;
+//    
+//    sharedRequest = [RequestHandler sharedRquest];
+//    
+//    [_spinner startAnimating];
+//    
+//    [[RequestHandler sharedRquest]coffeeShopsResults:self.latitudeString longitude:self.longitudeString];
+//}
+//
+//-(void)showCoffeeShopData{
+//    
+//    sharedRequest = [RequestHandler sharedRquest];
+//    
+//    for (int i = 0; i <[sharedRequest.coffeeShopsArray count]; i++)
+//    {
+//        NSMutableDictionary *location  = [[[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
+//        double lat = [[location objectForKey:@"lat"]doubleValue];
+//        double lng = [[location objectForKey:@"lng"]doubleValue];
+//        
+//        CLLocationCoordinate2D coord = {lat,lng};
+//        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+//        point.coordinate = coord;
+//        point.title = [[sharedRequest.coffeeShopsArray objectAtIndex:i]objectForKey:@"name"];
+//        [self.mapView addAnnotation:point];
+//        
+//        [_spinner stopAnimating];
+//    }
+//}
+//
+//#pragma mark - Mechanics
+//-(IBAction)mechanicsClicked:(id)sender{
+//    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
+//    
+//    [ _mapView removeAnnotations:annotationsToRemove] ;
+//    
+//    sharedRequest = [RequestHandler sharedRquest];
+//    
+//    [_spinner startAnimating];
+//    
+//    [[RequestHandler sharedRquest]mechanicsData:self.latitudeString longitude:self.longitudeString];
+//}
+//
+//-(void)showMechanicsData{
+//    
+//    sharedRequest = [RequestHandler sharedRquest];
+//    
+//    for (int i = 0; i <[sharedRequest.mechanicsArray count]; i++)
+//    {
+//        NSMutableDictionary *location  = [[[sharedRequest.restautrantsArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
+//        double lat = [[location objectForKey:@"lat"]doubleValue];
+//        double lng = [[location objectForKey:@"lng"]doubleValue];
+//        
+//        CLLocationCoordinate2D coord = {lat,lng};
+//        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+//        point.coordinate = coord;
+//        point.title = [[sharedRequest.mechanicsArray objectAtIndex:i]objectForKey:@"name"];
+//        [self.mapView addAnnotation:point];
+//        
+//        [_spinner stopAnimating];
+//    }
+//}
 
 
 - (void)didReceiveMemoryWarning
