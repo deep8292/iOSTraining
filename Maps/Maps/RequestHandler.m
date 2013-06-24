@@ -16,6 +16,7 @@
     return sharedMyRequest;
 }
 
+#pragma mark - AutoComplete Request
 -(void)getData:(NSString *)searchString latitude:(NSMutableString *)lat longitude:(NSMutableString*)lng
 {
     _dataArray = [[NSMutableArray alloc]init];
@@ -38,7 +39,9 @@
         self.dataArray = [JSON objectForKey:@"predictions"];
         
         self.referenceNameArray = [self.dataArray valueForKey:@"reference"];
-                
+        
+        NSLog(@"Reference Name array: %d",[self.referenceNameArray count]);
+        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"Doreload" object:nil];
         
     }failure:^(NSURLRequest *requestURL,NSHTTPURLResponse *response,NSError *error, id JSON){
@@ -48,6 +51,7 @@
     [operation start];
 }
 
+#pragma mark - Request for Details of One Place
 -(void)detailList:(NSString *)searchString
 {
     _detailArray = [[NSMutableArray alloc]init];
@@ -58,7 +62,7 @@
     
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
     
-    NSLog(@"%@",requestURL);
+//    NSLog(@"%@",requestURL);
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
         
@@ -77,6 +81,7 @@
     [operation start];
 }
 
+#pragma mark - Request to place all the places on map 
 -(void)showAllData:(NSMutableArray *)array{
     
     self.referenceArray = [[NSMutableArray alloc]init];
@@ -84,20 +89,52 @@
     self.name = [[NSMutableArray alloc]init];;
     self.location = [[NSMutableArray alloc]init];
     
+    self.latArray = [[NSMutableArray alloc]init];
+    self.lngArray = [[NSMutableArray alloc]init];
+    
+    self.resultArray = [[NSMutableArray alloc]init];
+    
+    self.reviewDictionary = [[NSMutableDictionary alloc]init];
+    
+//    NSMutableArray  *arr = [[NSMutableArray alloc]init];
+    
     for (int i = 0; i<[self.referenceNameArray count]; i++)
     {
         NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",[self.referenceNameArray objectAtIndex:i]];
         
         NSURL *URL = [NSURL URLWithString:requestString];
         NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
-
+        
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
+            
+            self.resultArray = [[JSON objectForKey:@"result"]objectForKey:@"reviews"];
+            
+//            NSLog(@"%@",self.resultArray);
             
             NSString *name = [[JSON objectForKey:@"result"]objectForKey:@"name"];
             
             [self.name addObject:name];
+           
+            //Setting Dictionary for reviews for every Place Name
+            [self.reviewDictionary setObject:self.resultArray forKey:name];
+            
+            NSLog(@"%@",self.reviewDictionary);
+            
+//            NSLog(@"new dict: %@",dict);
+            
+//            NSLog(@"Name array: %@",self.name);
             
             self.location = [[[JSON objectForKey:@"result"]objectForKey:@"geometry"]objectForKey:@"location"];
+            
+            NSMutableString *latitude = [[[[JSON objectForKey:@"result"]objectForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"];
+            
+            NSMutableString *longitude = [[[[JSON objectForKey:@"result"]objectForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"];
+        
+            [self.latArray addObject:latitude]; // array to keep all the latitudes of the searched place
+            [self.lngArray addObject:longitude];// array to keep all the longitudes of the searched place
+            
+//            NSLog(@"Latitude array:%@",self.latArray);
+//            NSLog(@"Longitude array:%@",self.lngArray);
             
             [[NSNotificationCenter defaultCenter]postNotificationName:@"showAllData" object:nil];
                         
@@ -107,8 +144,6 @@
         
         [operation start];
     }
-  
-    
 }
 
 #pragma mark - Request process on click of buttons

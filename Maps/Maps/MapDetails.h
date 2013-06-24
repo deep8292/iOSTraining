@@ -11,4 +11,10 @@
 @property(nonatomic)double latitude;
 @property(nonatomic)double longitude;
 @property(strong,nonatomic)NSMutableString *stringReference;
+
+@property(strong,nonatomic)NSMutableArray *reviewArray;
+
+
+@property(nonatomic)double locationLatitude;
+@property(nonatomic)double locationLongitude;
 @end

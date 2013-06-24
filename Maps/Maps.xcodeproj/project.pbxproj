@@ -43,6 +43,12 @@
 		004DA7BE176AFAF5001CBB73 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA7B5176AFAF5001CBB73 /* UIImageView+AFNetworking.m */; };
 		004DA7C2176AFB79001CBB73 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA7C0176AFB79001CBB73 /* DetailViewController.m */; };
 		004DA7C3176AFB79001CBB73 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 004DA7C1176AFB79001CBB73 /* DetailViewController.xib */; };
+		00D32FEB17787ADF00A238EC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D32FEA17787ADF00A238EC /* MobileCoreServices.framework */; };
+		00D43E0A1773239D001254FC /* favourite.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D43E081773239D001254FC /* favourite.png */; };
+		00D43E0B1773239D001254FC /* favourite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D43E091773239D001254FC /* favourite@2x.png */; };
+		00D43E0F1773240D001254FC /* Favourites.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D43E0E1773240D001254FC /* Favourites.m */; };
+		00D43E1217732426001254FC /* Favourites.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 00D43E1017732426001254FC /* Favourites.xcdatamodeld */; };
+		00D43E14177325A5001254FC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D43E13177325A5001254FC /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +118,13 @@
 		004DA7BF176AFB79001CBB73 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		004DA7C0176AFB79001CBB73 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		004DA7C1176AFB79001CBB73 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		00D32FEA17787ADF00A238EC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		00D43E081773239D001254FC /* favourite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favourite.png; sourceTree = "<group>"; };
+		00D43E091773239D001254FC /* favourite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favourite@2x.png"; sourceTree = "<group>"; };
+		00D43E0D1773240D001254FC /* Favourites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Favourites.h; sourceTree = "<group>"; };
+		00D43E0E1773240D001254FC /* Favourites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Favourites.m; sourceTree = "<group>"; };
+		00D43E1117732426001254FC /* Favourites.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Favourites.xcdatamodel; sourceTree = "<group>"; };
+		00D43E13177325A5001254FC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +132,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00D32FEB17787ADF00A238EC /* MobileCoreServices.framework in Frameworks */,
+				00D43E14177325A5001254FC /* CoreData.framework in Frameworks */,
 				004DA79A176AFA2C001CBB73 /* CoreLocation.framework in Frameworks */,
 				004DA798176AFA25001CBB73 /* MapKit.framework in Frameworks */,
 				004DA75A176AF9E6001CBB73 /* UIKit.framework in Frameworks */,
@@ -162,6 +177,8 @@
 		004DA758176AF9E6001CBB73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				00D32FEA17787ADF00A238EC /* MobileCoreServices.framework */,
+				00D43E13177325A5001254FC /* CoreData.framework */,
 				004DA799176AFA2C001CBB73 /* CoreLocation.framework */,
 				004DA797176AFA25001CBB73 /* MapKit.framework */,
 				004DA759176AF9E6001CBB73 /* UIKit.framework */,
@@ -177,6 +194,7 @@
 			children = (
 				004DA7A1176AFAF5001CBB73 /* Externals */,
 				004DA79E176AFA71001CBB73 /* Request */,
+				00D43E0C177323F0001254FC /* Images */,
 				0096291617705FB100D95068 /* Map Details */,
 				004DA768176AF9E6001CBB73 /* AppDelegate.h */,
 				004DA769176AF9E6001CBB73 /* AppDelegate.m */,
@@ -186,8 +204,9 @@
 				003EC454176F1C3A00FEC6E0 /* MapDetails.h */,
 				003EC455176F1C3B00FEC6E0 /* MapDetails.m */,
 				003EC456176F1C3B00FEC6E0 /* MapDetails.xib */,
-				003EC45B176F38BA00FEC6E0 /* map_pin.png */,
-				003EC459176F388300FEC6E0 /* map_pin@2x.png */,
+				00D43E0D1773240D001254FC /* Favourites.h */,
+				00D43E0E1773240D001254FC /* Favourites.m */,
+				00D43E1017732426001254FC /* Favourites.xcdatamodeld */,
 				004DA760176AF9E6001CBB73 /* Supporting Files */,
 			);
 			path = Maps;
@@ -282,6 +301,17 @@
 			name = "Map Details";
 			sourceTree = "<group>";
 		};
+		00D43E0C177323F0001254FC /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				003EC45B176F38BA00FEC6E0 /* map_pin.png */,
+				003EC459176F388300FEC6E0 /* map_pin@2x.png */,
+				00D43E081773239D001254FC /* favourite.png */,
+				00D43E091773239D001254FC /* favourite@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -363,6 +393,8 @@
 				003EC458176F1C3B00FEC6E0 /* MapDetails.xib in Resources */,
 				003EC45A176F388300FEC6E0 /* map_pin@2x.png in Resources */,
 				003EC45C176F38BA00FEC6E0 /* map_pin.png in Resources */,
+				00D43E0A1773239D001254FC /* favourite.png in Resources */,
+				00D43E0B1773239D001254FC /* favourite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +445,8 @@
 				004DA7C2176AFB79001CBB73 /* DetailViewController.m in Sources */,
 				003EC447176EE28300FEC6E0 /* MapViewController.m in Sources */,
 				003EC457176F1C3B00FEC6E0 /* MapDetails.m in Sources */,
+				00D43E0F1773240D001254FC /* Favourites.m in Sources */,
+				00D43E1217732426001254FC /* Favourites.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +643,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		00D43E1017732426001254FC /* Favourites.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				00D43E1117732426001254FC /* Favourites.xcdatamodel */,
+			);
+			currentVersion = 00D43E1117732426001254FC /* Favourites.xcdatamodel */;
+			path = Favourites.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 004DA74E176AF9E6001CBB73 /* Project object */;
 }

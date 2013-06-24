@@ -3,13 +3,21 @@
 #import "DetailViewController.h"
 #import "MapViewController.h"
 #import "MapDetails.h"
+#import "Favourites.h"
+
+
 @interface ViewController ()
 @property (strong,nonatomic)UIActivityIndicatorView *spinner;
 @property (strong,nonatomic)NSString *referenceString;
 @property (strong,nonatomic)NSString *titleName;
+@property (strong,nonatomic)NSString *savedNameString;
+@property (nonatomic)double savedLatitude;
+@property (nonatomic)double savedLongitude;
+@property (nonatomic)int indexrow;
 @end
 
 @implementation ViewController
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [_searchBar resignFirstResponder];
@@ -58,12 +66,12 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"Doreload" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showOnMap) name:@"showAllData" object:nil];
-    
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(saveToFavorites) name:@"showAllData" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showPlacesData) name:@"showPlaces" object:nil];
     
 }
 
-#pragma mark -Adding buttons
+#pragma mark - Adding buttons
 -(void)creatingButtons{
     
     restaurantButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -75,7 +83,7 @@
     
     coffeshopButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [coffeshopButton setTitle:@"Coffee Shops" forState:UIControlStateNormal];
-    coffeshopButton.frame = CGRectMake(117, 500, 100, 40);
+    coffeshopButton.frame = CGRectMake(112, 500, 110, 40);
     [self.view addSubview:coffeshopButton];
     [coffeshopButton addTarget:self action:@selector(coffeeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     coffeshopButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
@@ -93,7 +101,10 @@
 //    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
 //    
 //    [ _mapView removeAnnotations:annotationsToRemove] ;
-    
+    if (self.mapView.annotations == nil) {
+        NSLog(@"Map is already nil!!");
+    }
+    else{
     [self.mapView removeAnnotations:self.mapView.annotations];
     
     NSString *string = @"restaurants";
@@ -103,6 +114,7 @@
     [_spinner startAnimating];
     
     [[RequestHandler sharedRquest]placeResults:self.latitudeString longitude:self.longitudeString searchKeyword:string];
+    }
 }
 
 -(void)showPlacesData{
@@ -133,6 +145,10 @@
 //    
 //    [ _mapView removeAnnotations:annotationsToRemove] ;
     
+    if (self.mapView.annotations == nil) {
+        NSLog(@"Map is already nil!!");
+    }
+    else{
     [self.mapView removeAnnotations:self.mapView.annotations];
     
     NSString *string = @"coffee shops";
@@ -142,6 +158,7 @@
     [_spinner startAnimating];
     
     [[RequestHandler sharedRquest]placeResults:self.latitudeString longitude:self.longitudeString searchKeyword:string];
+    }
 }
 
 //-(void)showCoffeeShopData{
@@ -170,6 +187,11 @@
 //    
 //    [ _mapView removeAnnotations:annotationsToRemove] ;
     
+    if (self.mapView.annotations == nil) {
+        NSLog(@"Map is already nil!!");
+    }
+    else{
+    
     [self.mapView removeAnnotations:self.mapView.annotations];
     
     NSString *string = @"mechanics";
@@ -179,6 +201,7 @@
     [_spinner startAnimating];
     
     [[RequestHandler sharedRquest]placeResults:self.latitudeString longitude:self.longitudeString searchKeyword:string];
+    }
 }
 
 //-(void)showMechanicData{
@@ -210,11 +233,13 @@
     [mapView setCenterCoordinate:mapView.userLocation.location.coordinate animated:YES];
 }
 
-- (void)showOnMap
+
+- (void)showOnMap                       // Method to show all the places on map.
 {
     sharedRequest = [RequestHandler sharedRquest];
-    
+       
     for (int i=0 ; i<[sharedRequest.name count] ; i++) {
+        
         double lat = [[sharedRequest.location valueForKey:@"lat"]doubleValue];
         double lng = [[sharedRequest.location valueForKey:@"lng"]doubleValue];
         CLLocationCoordinate2D coord = {lat,lng};
@@ -224,11 +249,13 @@
         [self.view addSubview:self.mapView];
         [self.mapView addAnnotation:point];
     }
+    
     [_spinner stopAnimating];
 }
 
 
--(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+-(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation         //  Method to handle all the annotations on map.
+{
     
     if([annotation isKindOfClass: [MKUserLocation class]])
         return nil;
@@ -241,36 +268,61 @@
         pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:annotationID];
         pinView.canShowCallout = YES;
         pinView.image = [UIImage imageNamed:@"map_pin.png"];
+        
+        //Setting Right call button
+        
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+       
+        //Setting Left Call button
+        self.favButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.favButton.frame = CGRectMake(0, 0, 23, 23);
+        self.favButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        self.favButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        [self.favButton setImage:[UIImage imageNamed:@"favourite.png"] forState:UIControlStateNormal];
+        pinView.leftCalloutAccessoryView = self.favButton;
     }
-    
     return pinView;
+    
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-    
-   MKPointAnnotation *point = [self.mapView.selectedAnnotations objectAtIndex:[self.mapView.selectedAnnotations count]-1];
-    
-    self.titleName = [NSString stringWithFormat:@"%@",point.title];
-    
-    NSLog(@"%@",_titleName);
-}
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control     // Method to process request when accessory button is tapped
+{
     
-    MapDetails *map = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
+    sharedRequest = [RequestHandler sharedRquest];
     
-    map.nameString = self.titleName;
+    if (control == view.rightCalloutAccessoryView)
+    {
+        MapDetails *details = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
+        MKPointAnnotation *point = view.annotation;
     
-    NSLog(@"%@ ",map.nameString);
+        NSString *str = [NSString stringWithFormat:@"%@",point.title];
+        
+        NSLog(@"%@",str);
     
-    [self.navigationController pushViewController:map animated:YES];
-}
+        int index =[sharedRequest.name indexOfObject:str];
 
+        NSMutableArray * reviews = [sharedRequest.reviewDictionary objectForKey:str];
+        
+        details.reviewArray = [NSMutableArray arrayWithArray:reviews];
+               
+        double lat = [[sharedRequest.latArray objectAtIndex:index]doubleValue];
+        double lng = [[sharedRequest.lngArray objectAtIndex:index]doubleValue];
+        
+        details.locationLatitude = lat;
+        details.locationLongitude = lng;
+        details.nameString = str;
+    
+        [self.navigationController pushViewController:details animated:YES];}
+    else
+    {
+        NSLog(@"calloutAccessoryControlTapped: control=LEFT");
+    }
+}
 
 #pragma mark - Search Bar
 
-- (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar
+- (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar   
 {   self.table.hidden = FALSE;
     restaurantButton.hidden = TRUE;
     coffeshopButton.hidden = TRUE;
@@ -298,6 +350,14 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    
+    if (self.mapView.annotations == nil) {
+        NSLog(@"Map is already nil!!");
+    }
+    else{
+        
+        [self.mapView removeAnnotations:self.mapView.annotations];}
+    
     [[RequestHandler sharedRquest]showAllData:sharedRequest.referenceNameArray];
     
     self.table.hidden = TRUE;
@@ -324,12 +384,12 @@
 
 #pragma mark - Table View
 
--(void)reloadData
+-(void)reloadData               // Method to reload data and show data in table view
 {
     [self.table reloadData];
 }
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+    
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section     // Setting number of rows for table view
 {
     sharedRequest = [RequestHandler sharedRquest];
     
@@ -337,23 +397,44 @@
 }
 
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath   // Method to place data in table view
 {
     sharedRequest = [RequestHandler sharedRquest];
     
     static NSString *cellID = @"Cell Identifier";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
+//    if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
+//    }
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
-    cell.textLabel.text = [[sharedRequest.dataArray objectAtIndex:indexPath.row]objectForKey:@"description"];
+    self.favButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.favButton setImage:[UIImage imageNamed:@"favourite.png"] forState:UIControlStateNormal];
+    self.favButton.frame = CGRectMake(5, 15, 20, 20);
+    [self.favButton setTag:indexPath.row];
+    [self.favButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
+    UILabel *descriptionLabel = [[UILabel alloc]initWithFrame:CGRectMake(35, 0, 260, 50)];
+    descriptionLabel.backgroundColor = [UIColor clearColor];
+    descriptionLabel.font = [UIFont systemFontOfSize:12.0f];
+    
+    descriptionLabel.text = [[sharedRequest.dataArray objectAtIndex:indexPath.row]objectForKey:@"description"];
+    [cell.contentView addSubview:self.favButton];
+    [cell addSubview:descriptionLabel];
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+//-(void)buttonPressed:(id)sender{
+//
+//    UIButton *btn = (UIButton *)sender;
+//    self.indexrow = btn.tag;
+//    NSLog(@"Selected row is: %d",self.indexrow);
+//    
+//    NSLog(@"%@",[sharedRequest.referenceNameArray objectAtIndex:self.indexrow]);
+//}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath     // Method to process request when a cell is tapped
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

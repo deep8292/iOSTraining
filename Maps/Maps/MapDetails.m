@@ -4,13 +4,14 @@
 
 @interface MapDetails ()
 @property(strong,nonatomic)MKMapView *mapView;
-@property(strong,nonatomic)NSMutableArray *reviewArray;
-@property(strong,nonatomic)NSMutableString *name;
-@property(strong,nonatomic)NSMutableString *reviews;
-@property(strong,nonatomic)UIActivityIndicatorView *spinner;
+
 @property(strong,nonatomic)NSMutableArray *nameArray;
 @property(strong,nonatomic)NSMutableArray *arrayOfReviews;
 @property(strong,nonatomic)NSMutableArray *timeStamp;
+
+@property(strong,nonatomic)NSMutableString *name;
+@property(strong,nonatomic)NSMutableString *reviews;
+@property(strong,nonatomic)UIActivityIndicatorView *spinner;
 @end
 
 @implementation MapDetails
@@ -30,25 +31,73 @@
     
     self.navigationController.navigationBar.hidden = FALSE;
     
+    //Setting Spinner View
     self.spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.hidesWhenStopped = YES;
     self.spinner.frame = CGRectMake(0, 44, 320, 480);
     [self.view addSubview:_spinner];
     [self.spinner startAnimating];
     
+    //Setting Map
     self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, 0, 300, 250)];
     self.mapView.delegate = self;
     
+    //Setting Table View
     self.groupedTableView.delegate = self;
     self.groupedTableView.dataSource = self;
     
-    [[RequestHandler sharedRquest]detailList:self.stringReference];
+    //Check whether place is selected from map or table view
+    if (self.stringReference != nil) {
+        [[RequestHandler sharedRquest]detailList:self.stringReference];
+        
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showOnMap) name:@"showList" object:nil];
+    }
+    else{
+        [self showDataFromPin];
+    }
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showOnMap) name:@"showList" object:nil];
+}
+
+-(void)showDataFromPin      // Method to show data when coming from map
+{
+
+    double lat = self.locationLatitude;
+    double lng = self.locationLongitude;
+    
+    self.name = [NSString stringWithFormat:@"%@",self.nameString];
+    
+    
+    
+    self.nameArray = [self.reviewArray valueForKey:@"author_name"];
+    
+    self.arrayOfReviews = [self.reviewArray valueForKey:@"text"];
+    self.timeStamp = [self.reviewArray valueForKey:@"time"];
+    
+    CLLocationCoordinate2D coord = {lat,lng};
+    
+    MKPointAnnotation *pin =[[MKPointAnnotation alloc]init];
+    
+    pin.coordinate = coord;
+    pin.title = self.name;
+    [self.mapView addAnnotation:pin];
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.03f, 0.03f);
+    
+    MKCoordinateRegion region;
+    
+    region.center = coord;
+    region.span =span;
+    
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+    
+    [self.groupedTableView reloadData];
+
+    [self.spinner stopAnimating];
 }
 
 
--(void)showOnMap{
+-(void)showOnMap        // Method to show data when coming from table view
+{
     sharedRequest = [RequestHandler sharedRquest];
     
    
@@ -85,8 +134,7 @@
        
     [self.groupedTableView reloadData];
     
-    [self.spinner stopAnimating
-     ];
+    [self.spinner stopAnimating];
 }
 
 

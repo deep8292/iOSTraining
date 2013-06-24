@@ -2,7 +2,7 @@
 #import "RequestHandler.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
-@interface ViewController : UIViewController<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,MKMapViewDelegate>
+@interface ViewController : UIViewController<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,MKMapViewDelegate,MKAnnotation>
 {RequestHandler *sharedRequest;
     CLLocationManager *locationManager;
     UIButton *restaurantButton,*coffeshopButton,*mechanicButton;
@@ -15,5 +15,6 @@
 @property (strong,nonatomic)NSMutableString *latitudeString;
 @property (strong,nonatomic)NSMutableString *longitudeString;
 
+@property(strong,nonatomic)UIButton *favButton;
 
 @end
