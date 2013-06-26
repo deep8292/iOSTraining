@@ -1,3 +1,4 @@
+
 #import "ViewController.h"
 #import "RequestHandler.h"
 #import "DetailViewController.h"
@@ -7,6 +8,7 @@
 
 
 @interface ViewController ()
+
 @property (strong,nonatomic)UIActivityIndicatorView *spinner;
 @property (strong,nonatomic)NSString *referenceString;
 @property (strong,nonatomic)NSString *titleName;
@@ -14,9 +16,24 @@
 @property (nonatomic)double savedLatitude;
 @property (nonatomic)double savedLongitude;
 @property (nonatomic)int indexrow;
+@property (strong,nonatomic)NSString *pressedButtonName;
+
+@property (strong,nonatomic)NSMutableArray *placeNameArray;
+@property (strong,nonatomic)NSMutableArray *placeLatitudeArray;
+@property (strong,nonatomic)NSMutableArray *placeLongitudeArray;
+
+@property (strong,nonatomic)NSMutableArray *savedArray;
 @end
 
+
 @implementation ViewController
+
+-(id)init{
+    
+    id delegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [delegate managedObjectContext];
+    return [super init];
+}
 
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -28,13 +45,15 @@
     
     self.latitudeString = [[NSMutableString alloc]initWithFormat:@"%f",newLocation.coordinate.latitude];
     self.longitudeString = [[NSMutableString alloc]initWithFormat:@"%f",newLocation.coordinate.longitude];
-    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    self.placeNameArray = [[NSMutableArray alloc]init];
+    self.placeLatitudeArray= [[NSMutableArray alloc]init];
+    self.placeLongitudeArray = [[NSMutableArray alloc]init];;
     self.navigationController.navigationBar.hidden = TRUE;
     
     locationManager = [[CLLocationManager alloc] init];
@@ -56,7 +75,7 @@
     
     self.table.hidden = TRUE;
     
-    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 44, 320, 450)];
+    self.mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 44, 320, 400)];
     self.mapView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.mapView];
     self.mapView.showsUserLocation = YES;
@@ -66,7 +85,7 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"Doreload" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showOnMap) name:@"showAllData" object:nil];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(saveToFavorites) name:@"showAllData" object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(saveFromTable) name:@"showAllData" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showPlacesData) name:@"showPlaces" object:nil];
     
 }
@@ -76,31 +95,40 @@
     
     restaurantButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [restaurantButton setTitle:@"Restaurants" forState:UIControlStateNormal];
-    restaurantButton.frame = CGRectMake(7, 500, 100, 40);
+    restaurantButton.frame = CGRectMake(7, 450, 110, 40);
     [self.view addSubview:restaurantButton];
-    [restaurantButton addTarget:self action:@selector(restaurantButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [restaurantButton addTarget:self action:@selector(restaurantButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     restaurantButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     coffeshopButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [coffeshopButton setTitle:@"Coffee Shops" forState:UIControlStateNormal];
-    coffeshopButton.frame = CGRectMake(112, 500, 110, 40);
+    coffeshopButton.frame = CGRectMake(7, 500, 110, 40);
     [self.view addSubview:coffeshopButton];
-    [coffeshopButton addTarget:self action:@selector(coffeeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [coffeshopButton addTarget:self action:@selector(coffeeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     coffeshopButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     mechanicButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [mechanicButton setTitle:@"Mechanics" forState:UIControlStateNormal];
-    mechanicButton.frame = CGRectMake(227, 500, 90, 40);
+    mechanicButton.frame = CGRectMake(227, 450, 90, 40);
     [self.view addSubview:mechanicButton];
-    [mechanicButton addTarget:self action:@selector(mechanicButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [mechanicButton addTarget:self action:@selector(mechanicButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     mechanicButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    favouriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [favouriteButton setTitle:@"Favourite" forState:UIControlStateNormal];
+    favouriteButton.frame = CGRectMake(227, 500, 90, 40);
+    [self.view addSubview:favouriteButton];
+    [favouriteButton addTarget:self action:@selector(favouiteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    favouriteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 }
 
 #pragma mark - Restaurants button clicked
--(void)restaurantButtonClicked{
-//    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
-//    
-//    [ _mapView removeAnnotations:annotationsToRemove] ;
+-(void)restaurantButtonClicked:(id)sender{
+
+    self.pressedButtonName = [sender currentTitle];
+    
+    NSLog(@"Button pressed: %@", self.pressedButtonName);
+    
     if (self.mapView.annotations == nil) {
         NSLog(@"Map is already nil!!");
     }
@@ -117,6 +145,59 @@
     }
 }
 
+#pragma mark - Coffee button clicked
+-(void)coffeeButtonClicked:(id)sender{
+    
+    self.pressedButtonName = [sender currentTitle];
+    
+    NSLog(@"Button pressed: %@", self.pressedButtonName);
+    
+    if (self.mapView.annotations == nil) {
+        NSLog(@"Map is already nil!!");
+    }
+    else{
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
+    NSString *string = @"coffee shops";
+    
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    [_spinner startAnimating];
+    
+    [[RequestHandler sharedRquest]placeResults:self.latitudeString longitude:self.longitudeString searchKeyword:string];
+    }
+}
+#pragma mark - Mechanic button clicked
+-(void)mechanicButtonClicked:(id)sender{
+    
+    self.pressedButtonName = [sender currentTitle];
+    
+    NSLog(@"Button pressed: %@", self.pressedButtonName);
+    
+    if (self.mapView.annotations == nil) {
+        NSLog(@"Map is already nil!!");
+    }
+    else{
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
+    NSString *string = @"mechanics";
+    
+    sharedRequest = [RequestHandler sharedRquest];
+    
+    [_spinner startAnimating];
+    
+    [[RequestHandler sharedRquest]placeResults:self.latitudeString longitude:self.longitudeString searchKeyword:string];
+        
+    sharedRequest = [RequestHandler sharedRquest];
+        
+    [_spinner startAnimating];
+        
+    
+    }
+}
+
+#pragma mark - Placing pins on map on the basis of button
 -(void)showPlacesData{
     sharedRequest = [RequestHandler sharedRquest];
     
@@ -136,93 +217,71 @@
         
         [_spinner stopAnimating];
     }
-
+    
 }
 
-#pragma mark - Coffee button clicked
--(void)coffeeButtonClicked{
-//    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
-//    
-//    [ _mapView removeAnnotations:annotationsToRemove] ;
+#pragma mark - Favourite button clicked
+-(void)favouiteButtonClicked:(id)sender{
     
-    if (self.mapView.annotations == nil) {
-        NSLog(@"Map is already nil!!");
+    self.pressedButtonName = [sender currentTitle];
+    
+    NSLog(@"Button pressed: %@", self.pressedButtonName);
+    
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:@"savedData"]) {
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        [_spinner startAnimating];
+        [self fetchRecords];
+        for (int i =0; i<[_savedArray count]; i++) {
+            Favourites *fav = [_savedArray objectAtIndex:i];
+            double lat = [fav.placeLatitude doubleValue];
+            double lng = [fav.placeLongitude doubleValue];
+            NSLog(@"%f,%f",lat,lng);
+            CLLocationCoordinate2D coord = {lat,lng};
+            MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+            point.coordinate = coord;
+            point.title = fav.placeName;
+            [self.mapView addAnnotation:point];
+        }
+        [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"savedData"];
+        [_spinner stopAnimating];
+
     }
     else{
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    
-    NSString *string = @"coffee shops";
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    [_spinner startAnimating];
-    
-    [[RequestHandler sharedRquest]placeResults:self.latitudeString longitude:self.longitudeString searchKeyword:string];
+        if ([self.mapView.annotations count] == 1) {
+            NSLog(@"Map is already nil!!");
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Favorites" message:@"You have no favorites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"savedData"];
+        }
+        else{
+            [self.mapView removeAnnotations:self.mapView.annotations];
+            [_spinner startAnimating];
+            [self fetchRecords];
+            for (int i =0; i<[_savedArray count]; i++) {
+                Favourites *fav = [_savedArray objectAtIndex:i];
+                double lat = [fav.placeLatitude doubleValue];
+                double lng = [fav.placeLongitude doubleValue];
+                NSLog(@"%f,%f",lat,lng);
+                CLLocationCoordinate2D coord = {lat,lng};
+                MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+                point.coordinate = coord;
+                point.title = fav.placeName;
+                [self.mapView addAnnotation:point];
+            }
+            [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"savedData"];
+            [_spinner stopAnimating];
+        }
     }
 }
 
-//-(void)showCoffeeShopData{
-//    
-//    sharedRequest = [RequestHandler sharedRquest];
-//    
-//    for (int i = 0; i <[sharedRequest.placeArray count]; i++)
-//    {
-//        NSMutableDictionary *location  = [[[sharedRequest.placeArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
-//        double lat = [[location objectForKey:@"lat"]doubleValue];
-//        double lng = [[location objectForKey:@"lng"]doubleValue];
-//        
-//        CLLocationCoordinate2D coord = {lat,lng};
-//        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
-//        point.coordinate = coord;
-//        point.title = [[sharedRequest.placeArray objectAtIndex:i]objectForKey:@"name"];
-//        [self.mapView addAnnotation:point];
-//        
-//        [_spinner stopAnimating];
-//    }
-//}
-//
-#pragma mark - Mechanic button clicked
--(void)mechanicButtonClicked{
-//    NSMutableArray * annotationsToRemove = [ self.mapView.annotations mutableCopy ];
-//    
-//    [ _mapView removeAnnotations:annotationsToRemove] ;
-    
-    if (self.mapView.annotations == nil) {
-        NSLog(@"Map is already nil!!");
-    }
-    else{
-    
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    
-    NSString *string = @"mechanics";
-    
-    sharedRequest = [RequestHandler sharedRquest];
-    
-    [_spinner startAnimating];
-    
-    [[RequestHandler sharedRquest]placeResults:self.latitudeString longitude:self.longitudeString searchKeyword:string];
-    }
+-(void)fetchRecords{
+    NSEntityDescription *favourites = [NSEntityDescription entityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    [request setEntity:favourites];
+    NSError *error;
+    NSMutableArray *mutableFetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error]mutableCopy];
+    [self setSavedArray:mutableFetchResults];
 }
-
-//-(void)showMechanicData{
-//    
-//    sharedRequest = [RequestHandler sharedRquest];
-//    
-//    for (int i = 0; i <[sharedRequest.placeArray count]; i++)
-//    {
-//        NSMutableDictionary *location  = [[[sharedRequest.placeArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
-//        double lat = [[location objectForKey:@"lat"]doubleValue];
-//        double lng = [[location objectForKey:@"lng"]doubleValue];
-//        
-//        CLLocationCoordinate2D coord = {lat,lng};
-//        MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
-//        point.coordinate = coord;
-//        point.title = [[sharedRequest.placeArray objectAtIndex:i]objectForKey:@"name"];
-//        [self.mapView addAnnotation:point];
-//        
-//        [_spinner stopAnimating];
-//    }
-//}
 
 #pragma mark - Map 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
@@ -267,8 +326,8 @@
     if (!pinView) {
         pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:annotationID];
         pinView.canShowCallout = YES;
+//        pinView.userInteractionEnabled = YES;
         pinView.image = [UIImage imageNamed:@"map_pin.png"];
-        
         //Setting Right call button
         
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -291,17 +350,23 @@
     
     sharedRequest = [RequestHandler sharedRquest];
     
+     MKPointAnnotation *point = view.annotation;
+    
     if (control == view.rightCalloutAccessoryView)
     {
         MapDetails *details = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
-        MKPointAnnotation *point = view.annotation;
-    
+       
         NSString *str = [NSString stringWithFormat:@"%@",point.title];
-        
-        NSLog(@"%@",str);
     
         int index =[sharedRequest.name indexOfObject:str];
-
+        if ([self.pressedButtonName isEqualToString:@"Coffee Shops"] || [self.pressedButtonName isEqualToString:@"Restaurants"] || [self.pressedButtonName isEqualToString:@"Mechanics"])
+        {
+            double lat = [[sharedRequest.placeLatAray objectAtIndex:index]doubleValue];
+            double lng = [[sharedRequest.placeLngAray objectAtIndex:index]doubleValue];
+            details.locationLatitude = lat;
+            details.locationLongitude = lng;
+        }
+        else{
         NSMutableArray * reviews = [sharedRequest.reviewDictionary objectForKey:str];
         
         details.reviewArray = [NSMutableArray arrayWithArray:reviews];
@@ -313,10 +378,46 @@
         details.locationLongitude = lng;
         details.nameString = str;
     
-        [self.navigationController pushViewController:details animated:YES];}
+            [self.navigationController pushViewController:details animated:YES];}}
     else
     {
-        NSLog(@"calloutAccessoryControlTapped: control=LEFT");
+        Favourites *fav = (Favourites *)[NSEntityDescription insertNewObjectForEntityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
+        
+        NSString *str = [NSString stringWithFormat:@"%@",point.title];
+        
+        int index =[sharedRequest.name indexOfObject:str];
+        
+        [fav setPlaceName:str];
+        
+        if ([self.pressedButtonName isEqualToString:@"Coffee Shops"] || [self.pressedButtonName isEqualToString:@"Restaurants"] || [self.pressedButtonName isEqualToString:@"Mechanics"])
+        {
+            double lat = [[sharedRequest.placeLatAray objectAtIndex:index]doubleValue];
+            NSString *str1 = [[NSString alloc]initWithFormat:@"%f",lat ];
+            double lng = [[sharedRequest.placeLngAray objectAtIndex:index]doubleValue];
+            NSString *str2 = [[NSString alloc]initWithFormat:@"%f",lng];
+            
+            [fav setPlaceLatitude:str1];
+            [fav setPlaceLongitude:str2];
+        }
+        
+        else
+        {
+        double lat = [[sharedRequest.latArray objectAtIndex:index]doubleValue];
+        NSString *str1 = [[NSString alloc]initWithFormat:@"%f",lat ];
+        double lng = [[sharedRequest.lngArray objectAtIndex:index]doubleValue];
+        NSString *str2 = [[NSString alloc]initWithFormat:@"%f",lng];
+        
+        [fav setPlaceLatitude:str1];
+        [fav setPlaceLongitude:str2];
+        }
+        NSError *error;
+        
+        if (![_managedObjectContext save:&error]) {
+            NSLog(@"Error %@", [error localizedDescription]);
+        }
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Added" message:@"Added To Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 
@@ -327,6 +428,7 @@
     restaurantButton.hidden = TRUE;
     coffeshopButton.hidden = TRUE;
     mechanicButton.hidden = TRUE;
+    favouriteButton.hidden = TRUE;
     self.mapView.hidden = TRUE;
     
     _table.scrollEnabled = NO;
@@ -345,6 +447,7 @@
     restaurantButton.hidden = FALSE;
     coffeshopButton.hidden = FALSE;
     mechanicButton.hidden = FALSE;
+    favouriteButton.hidden = FALSE;
 }
 
 
@@ -368,7 +471,7 @@
     restaurantButton.hidden = FALSE;
     coffeshopButton.hidden =FALSE;
     mechanicButton.hidden = FALSE;
-    
+    favouriteButton.hidden = FALSE;
     [self.searchBar resignFirstResponder];
     
 }
@@ -424,14 +527,32 @@
     return cell;
 }
 
-
+//-(void)saveFromTable{
+//    
+//    NSMutableString *referenceToSave = [sharedRequest.referenceNameArray objectAtIndex:self.indexrow];
+//    
+//    [[RequestHandler sharedRquest]detailList:referenceToSave];
+//    
+//    Favourites *fav = (Favourites *)[NSEntityDescription insertNewObjectForEntityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
+//    
+//    NSMutableString *placeName = [sharedRequest.detailArray valueForKey:@"name"];
+//    
+//    [fav setPlaceName:placeName];
+//    
+//    double latitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"]doubleValue];
+//    double longitude = [[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"]doubleValue];
+//    [fav setPlaceLongitude:longitude];
+//    [fav setPlaceLatitude:latitude];
+//}
+//
+//
 //-(void)buttonPressed:(id)sender{
 //
 //    UIButton *btn = (UIButton *)sender;
 //    self.indexrow = btn.tag;
 //    NSLog(@"Selected row is: %d",self.indexrow);
 //    
-//    NSLog(@"%@",[sharedRequest.referenceNameArray objectAtIndex:self.indexrow]);
+////    [self saveFromTable];
 //}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath     // Method to process request when a cell is tapped

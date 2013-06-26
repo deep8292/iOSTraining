@@ -1,15 +1,9 @@
-//
-//  AppDelegate.m
-//  Maps
-//
-//  Created by Deepak Khiwani on 14/06/13.
-//  Copyright (c) 2013 Deepak Khiwani. All rights reserved.
-//
+
 
 #import "AppDelegate.h"
-
+#import "Favourites.h"
 #import "ViewController.h"
-
+#import "MapDetails.h"
 #import <CoreData/CoreData.h>
 
 @implementation AppDelegate
@@ -18,35 +12,38 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
+    self.viewController.managedObjectContext = [self managedObjectContext];
     self.navigation = [[UINavigationController alloc]initWithRootViewController:self.viewController];
     self.window.rootViewController = self.navigation;
     [self.window makeKeyAndVisible];
     return YES;
 }
 
--(NSManagedObjectContext *)managedObjectContext{
-    if (self.managedObjectContext != nil) {
-        return self.managedObjectContext;
+- (NSManagedObjectContext *) managedObjectContext {
+	
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
     }
+	
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator!=nil) {
-        self.managedObjectContext = [[NSManagedObjectContext alloc]init];
-        [self.managedObjectContext setPersistentStoreCoordinator:coordinator];
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator: coordinator];
     }
-    return self.managedObjectContext;
+    return _managedObjectContext;
 }
 
 -(NSManagedObjectModel *)managedObjectModel{
-    if (self.managedObjectModel != nil ) {
-        return self.managedObjectModel;
+    if (_managedObjectModel != nil ) {
+        return _managedObjectModel;
     }
-    self.managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
-    return self.managedObjectModel;
+    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    return _managedObjectModel;
 }
 
 -(NSPersistentStoreCoordinator *)persistentStoreCoordinator{
-    if (self.persistentStoreCoordinator!=nil) {
-        return self.persistentStoreCoordinator;
+    if (_persistentStoreCoordinator!=nil) {
+        return _persistentStoreCoordinator;
     }
     NSURL *storeURL = [[self applicationDocumentDirectory]URLByAppendingPathComponent:@"FavModel.sqlite"];
     NSError *error = nil;

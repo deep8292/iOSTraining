@@ -1,9 +1,9 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import <CoreData/CoreData.h>
 @interface Favourites : NSObject
 @property(strong,nonatomic)NSString *placeName;
-@property(nonatomic)double placeLatitude;
-@property(nonatomic)double placeLongitude;
+@property(strong,nonatomic)NSString *placeLatitude;
+@property(strong,nonatomic)NSString *placeLongitude;
 @end

@@ -16,14 +16,16 @@
 
 @implementation MapDetails
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) {
+//        id delegate = [[UIApplication sharedApplication]delegate];
+//        _managedObjectContext = [delegate managedObjectContext];
+//
+//    }
+//    return self;
+//}
 
 - (void)viewDidLoad
 {
@@ -65,11 +67,7 @@
     double lng = self.locationLongitude;
     
     self.name = [NSString stringWithFormat:@"%@",self.nameString];
-    
-    
-    
     self.nameArray = [self.reviewArray valueForKey:@"author_name"];
-    
     self.arrayOfReviews = [self.reviewArray valueForKey:@"text"];
     self.timeStamp = [self.reviewArray valueForKey:@"time"];
     

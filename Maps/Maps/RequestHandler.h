@@ -19,6 +19,8 @@
 @property(strong,nonatomic)NSMutableDictionary *reviewDictionary;
 
 @property(strong,nonatomic)NSMutableArray *placeArray;
+@property(strong,nonatomic)NSMutableArray *placeLatAray;
+@property(strong,nonatomic)NSMutableArray *placeLngAray;
 //@property(strong,nonatomic)NSMutableArray *restautrantsArray;
 //@property(strong,nonatomic)NSMutableArray *coffeeShopsArray;
 //@property(strong,nonatomic)NSMutableArray *mechanicsArray;;

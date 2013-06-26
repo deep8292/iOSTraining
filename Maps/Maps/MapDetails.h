@@ -17,4 +17,6 @@
 
 @property(nonatomic)double locationLatitude;
 @property(nonatomic)double locationLongitude;
+
+@property(strong,nonatomic)NSManagedObjectContext *managedObjectContext;
 @end

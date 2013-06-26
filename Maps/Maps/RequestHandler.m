@@ -32,16 +32,14 @@
     
     NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
     
-//    NSLog(@"Request URL: %@",requestURL);
+    NSLog(@"Request URL: %@",requestURL);
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
         
         self.dataArray = [JSON objectForKey:@"predictions"];
         
         self.referenceNameArray = [self.dataArray valueForKey:@"reference"];
-        
-        NSLog(@"Reference Name array: %d",[self.referenceNameArray count]);
-        
+    
         [[NSNotificationCenter defaultCenter]postNotificationName:@"Doreload" object:nil];
         
     }failure:^(NSURLRequest *requestURL,NSHTTPURLResponse *response,NSError *error, id JSON){
@@ -87,7 +85,7 @@
     self.referenceArray = [[NSMutableArray alloc]init];
     
     self.name = [[NSMutableArray alloc]init];;
-    self.location = [[NSMutableArray alloc]init];
+//    self.location = [[NSMutableArray alloc]init];
     
     self.latArray = [[NSMutableArray alloc]init];
     self.lngArray = [[NSMutableArray alloc]init];
@@ -96,8 +94,6 @@
     
     self.reviewDictionary = [[NSMutableDictionary alloc]init];
     
-//    NSMutableArray  *arr = [[NSMutableArray alloc]init];
-    
     for (int i = 0; i<[self.referenceNameArray count]; i++)
     {
         NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",[self.referenceNameArray objectAtIndex:i]];
@@ -105,11 +101,11 @@
         NSURL *URL = [NSURL URLWithString:requestString];
         NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
         
+//        NSLog(@"Show Data : %@",requestURL);
+        
         AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
             
             self.resultArray = [[JSON objectForKey:@"result"]objectForKey:@"reviews"];
-            
-//            NSLog(@"%@",self.resultArray);
             
             NSString *name = [[JSON objectForKey:@"result"]objectForKey:@"name"];
             
@@ -117,13 +113,7 @@
            
             //Setting Dictionary for reviews for every Place Name
             [self.reviewDictionary setObject:self.resultArray forKey:name];
-            
-            NSLog(@"%@",self.reviewDictionary);
-            
-//            NSLog(@"new dict: %@",dict);
-            
-//            NSLog(@"Name array: %@",self.name);
-            
+                        
             self.location = [[[JSON objectForKey:@"result"]objectForKey:@"geometry"]objectForKey:@"location"];
             
             NSMutableString *latitude = [[[[JSON objectForKey:@"result"]objectForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"];
@@ -132,10 +122,7 @@
         
             [self.latArray addObject:latitude]; // array to keep all the latitudes of the searched place
             [self.lngArray addObject:longitude];// array to keep all the longitudes of the searched place
-            
-//            NSLog(@"Latitude array:%@",self.latArray);
-//            NSLog(@"Longitude array:%@",self.lngArray);
-            
+                        
             [[NSNotificationCenter defaultCenter]postNotificationName:@"showAllData" object:nil];
                         
         }failure:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, NSError *error, id JSON){
@@ -151,6 +138,9 @@
     
     self.placeArray = [[NSMutableArray alloc]init];
     
+    self.placeLatAray= [[NSMutableArray alloc]init];
+    self.placeLngAray = [[NSMutableArray alloc]init];
+    
     NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=%@&location=%@,%@&radius=33000&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",search,lat,lng];
     
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -164,8 +154,18 @@
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
         
         self.placeArray = [JSON objectForKey:@"results"];
+
+        self.name = [self.placeArray valueForKey:@"name"];
         
-        NSLog(@"Restaurant:%@",self.placeArray);
+        self.location = [self.placeArray valueForKey:@"geometry"];
+    
+        for (int i = 0; i<[self.placeArray count]; i++) {
+            NSMutableDictionary *dict = [[[self.placeArray objectAtIndex:i]objectForKey:@"geometry"]objectForKey:@"location"];
+            NSMutableString *latitudeString = [dict objectForKey:@"lat"];
+            NSMutableString *longitudeString = [dict objectForKey:@"lng"];
+            [_placeLatAray addObject:latitudeString];
+            [_placeLngAray addObject:longitudeString];
+        }
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"showPlaces" object:nil];
         
@@ -175,60 +175,5 @@
     
     [operation start];
 }
-
-//-(void)coffeeShopsResults:(NSMutableString*)lat longitude:(NSMutableString*)lng{
-//    
-//    self.coffeeShopsArray = [[NSMutableArray alloc]init];
-//    
-//    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=coffee shops&location=%@,%@&radius=33000&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",lat,lng];
-//    
-//    requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    
-//    NSLog(@"Request String:%@",requestString);
-//    
-//    NSURL *URL = [NSURL URLWithString:requestString];
-//    
-//    NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
-//    
-//     NSLog(@"Coffee Shops %@",requestURL);
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
-//        
-//        self.coffeeShopsArray = [JSON objectForKey:@"results"];
-//        
-//        [[NSNotificationCenter defaultCenter]postNotificationName:@"CoffeeShop" object:nil];
-//        
-//    }failure:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, NSError *error, id JSON){
-//        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-//    }];
-//    
-//    [operation start];
-//}
-//
-//-(void)mechanicsData:(NSMutableString*)lat longitude:(NSMutableString*)lng{
-//    
-//    self.mechanicsArray = [[NSMutableArray alloc]init];
-//    
-//    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/textsearch/json?query=mechanics&location=%@,%@&radius=33000&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",lat,lng];
-//    
-//    NSURL *URL = [NSURL URLWithString:requestString];
-//    
-//    NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
-//    
-//     NSLog(@"Mechanics %@",requestURL);
-//    
-//    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
-//        
-//        self.mechanicsArray = [JSON objectForKey:@"results"];
-//        
-//        [[NSNotificationCenter defaultCenter]postNotificationName:@"Mechanics" object:nil];
-//        
-//    }failure:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, NSError *error, id JSON){
-//        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
-//    }];
-//    
-//    [operation start];
-//}
-
 
 @end
