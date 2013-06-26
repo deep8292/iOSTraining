@@ -79,6 +79,37 @@
     [operation start];
 }
 
+-(void)addToFavFromTable:(NSString *)searchString
+{
+    _favArray = [[NSMutableArray alloc]init];
+    
+    NSString *requestString = [[NSString alloc]initWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?reference=%@&sensor=true&key=AIzaSyAf28q6kNqs0jPjPnVf-MoMCTJJB7qFBQ0",searchString];
+    
+    NSURL *URL = [NSURL URLWithString:requestString];
+    
+    NSURLRequest *requestURL = [NSURLRequest requestWithURL:URL];
+    
+    //    NSLog(@"%@",requestURL);
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:requestURL success:^(NSURLRequest *requestURL,NSHTTPURLResponse *response, id JSON){
+        
+        self.favArray = [JSON objectForKey:@"result"];
+        
+//        self.ratings = [[JSON objectForKey:@"result"]objectForKey:@"rating"];
+        
+        //        NSLog(@"%@",self.detailArray);
+        
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"newList" object:nil];
+        
+    }failure:^(NSURLRequest *requestURL,NSHTTPURLResponse *response,NSError *error, id JSON){
+        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+    }];
+    
+    [operation start];
+}
+
+
 #pragma mark - Request to place all the places on map 
 -(void)showAllData:(NSMutableArray *)array{
     

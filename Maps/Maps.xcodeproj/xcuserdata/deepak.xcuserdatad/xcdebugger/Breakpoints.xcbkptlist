@@ -21,7 +21,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "393939086.43975"
+         timestampString = "393945005.975547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "224"
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "393941408.000751"
+         timestampString = "393945005.975547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "382"
-         endingLineNumber = "382"
+         startingLineNumber = "390"
+         endingLineNumber = "390"
          landmarkName = "-mapView:annotationView:calloutAccessoryControlTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,12 +47,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "393941409.048871"
+         timestampString = "393945005.975547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "348"
-         endingLineNumber = "348"
+         startingLineNumber = "356"
+         endingLineNumber = "356"
          landmarkName = "-mapView:annotationView:calloutAccessoryControlTapped:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Maps/ViewController.m"
+         timestampString = "393945005.975547"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "538"
+         endingLineNumber = "538"
+         landmarkName = "-saveFromTable"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Maps/ViewController.m"
+         timestampString = "393945005.975547"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "285"
+         endingLineNumber = "285"
+         landmarkName = "-fetchRecords"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Maps/MapDetails.m"
+         timestampString = "393946000.111143"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "67"
+         endingLineNumber = "67"
+         landmarkName = "-btn_fav_pressed"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

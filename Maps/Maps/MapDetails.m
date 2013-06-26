@@ -1,7 +1,7 @@
 
 
 #import "MapDetails.h"
-
+#import "Favourites.h"
 @interface MapDetails ()
 @property(strong,nonatomic)MKMapView *mapView;
 
@@ -16,22 +16,26 @@
 
 @implementation MapDetails
 
-//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//{
-//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-//    if (self) {
-//        id delegate = [[UIApplication sharedApplication]delegate];
-//        _managedObjectContext = [delegate managedObjectContext];
-//
-//    }
-//    return self;
-//}
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        id delegate = [[UIApplication sharedApplication] delegate];
+        self.managedObjectContext = [delegate managedObjectContext];
+
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.navigationController.navigationBar.hidden = FALSE;
+    
+    UIBarButtonItem *addToFav = [[UIBarButtonItem alloc]initWithTitle:@"Add to Favourites" style:UIBarButtonItemStylePlain target:self action:@selector(btn_fav_pressed)];
+    
+    self.navigationItem.rightBarButtonItem = addToFav;
     
     //Setting Spinner View
     self.spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -59,6 +63,36 @@
     }
     
 }
+
+-(void)btn_fav_pressed
+{
+    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOWALERT" object:nil];
+    
+    Favourites *fav = (Favourites *)[NSEntityDescription insertNewObjectForEntityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
+    
+    [fav setPlaceName:self.name];
+    
+    NSString *str1 = [[NSString alloc]initWithFormat:@"%f",[[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lat"]doubleValue]];
+    
+    [fav setPlaceLatitude:str1];
+    
+    NSString *str2 = [[NSString alloc]initWithFormat:@"%f",[[[[sharedRequest.detailArray valueForKey:@"geometry"]objectForKey:@"location"]objectForKey:@"lng"]doubleValue]];
+    
+    [fav setPlaceLongitude:str2];
+    
+    NSError *error;
+    
+    if (![_managedObjectContext save:&error]) {
+        NSLog(@"Error %@", [error localizedDescription]);
+    }
+    
+
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Added" message:@"Added To Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    
+    [alert show];
+    
+}
+
 
 -(void)showDataFromPin      // Method to show data when coming from map
 {

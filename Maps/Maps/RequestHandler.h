@@ -4,6 +4,8 @@
 
 @interface RequestHandler : NSObject
 
+@property(strong,nonatomic)NSMutableArray *favArray;
+
 @property(strong,nonatomic)NSMutableString *requestString;
 @property(strong,nonatomic)NSMutableArray *dataArray;
 @property(strong,nonatomic)NSMutableArray *referenceNameArray;
@@ -32,6 +34,8 @@
 -(void)showAllData:(NSMutableArray *)array;
 
 -(void)placeResults:(NSMutableString*)lat longitude:(NSMutableString*)lng searchKeyword:(NSString *)search;
+
+-(void)addToFavFromTable:(NSString *)searchString;
 
 //-(void)restaurantsResults:(NSMutableString*)lat longitude:(NSMutableString*)lng;
 //-(void)coffeeShopsResults:(NSMutableString*)lat longitude:(NSMutableString*)lng;

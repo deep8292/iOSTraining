@@ -13,6 +13,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
     self.viewController.managedObjectContext = [self managedObjectContext];
+    MapDetails *map = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
+    map.managedObjectContext = [self managedObjectContext];
     self.navigation = [[UINavigationController alloc]initWithRootViewController:self.viewController];
     self.window.rootViewController = self.navigation;
     [self.window makeKeyAndVisible];
