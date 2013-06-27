@@ -86,6 +86,7 @@
         NSLog(@"Error %@", [error localizedDescription]);
     }
     
+    [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"DataSavedSucessfully"];
 
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Added" message:@"Added To Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     

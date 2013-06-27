@@ -223,7 +223,7 @@
 #pragma mark - Favourite button clicked
 -(void)favouiteButtonClicked:(id)sender
 {
-    
+//    self.mapView.showsUserLocation = FALSE;
     self.pressedButtonName = [sender currentTitle];
     
     NSLog(@"Button pressed: %@", self.pressedButtonName);
@@ -251,7 +251,7 @@
     }
     else
     {
-        if ([self.mapView.annotations count] == 1)
+        if (![[NSUserDefaults standardUserDefaults]boolForKey:@"DataSavedSucessfully"])
         {
             NSLog(@"Map is already nil!!");
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"No Favorites" message:@"You have no favorites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -334,10 +334,9 @@
     if (!pinView) {
         pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:annotationID];
         pinView.canShowCallout = YES;
-//        pinView.userInteractionEnabled = YES;
         pinView.image = [UIImage imageNamed:@"map_pin.png"];
-        //Setting Right call button
         
+        //Setting Right call button
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
        
         //Setting Left Call button
@@ -352,10 +351,8 @@
     
 }
 
-
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control     // Method to process request when accessory button is tapped
 {
-    
     sharedRequest = [RequestHandler sharedRquest];
     
      MKPointAnnotation *point = view.annotation;
@@ -366,15 +363,52 @@
        
         NSString *str = [NSString stringWithFormat:@"%@",point.title];
     
-        int index =[sharedRequest.name indexOfObject:str];
+//        int index =[sharedRequest.name indexOfObject:str];
+        
         if ([self.pressedButtonName isEqualToString:@"Coffee Shops"] || [self.pressedButtonName isEqualToString:@"Restaurants"] || [self.pressedButtonName isEqualToString:@"Mechanics"])
         {
+            int index =[sharedRequest.name indexOfObject:str];
+            
             double lat = [[sharedRequest.placeLatAray objectAtIndex:index]doubleValue];
             double lng = [[sharedRequest.placeLngAray objectAtIndex:index]doubleValue];
             details.locationLatitude = lat;
             details.locationLongitude = lng;
+            details.nameString = str;
+        }
+        else if ([self.pressedButtonName isEqualToString:@"Favourite"]){
+            NSMutableArray *savedNameArray = [[NSMutableArray alloc]init];
+            NSMutableArray *savedLatArray = [[NSMutableArray alloc]init];
+            NSMutableArray *savedLngArray = [[NSMutableArray alloc]init];
+            for (int i =0; i<[_savedArray count]; i++)
+            {
+                Favourites *fav = [_savedArray objectAtIndex:i];
+                double lat = [fav.placeLatitude doubleValue];
+                double lng = [fav.placeLongitude doubleValue];
+                NSMutableString *savedLatString = [[NSMutableString alloc]initWithFormat:@"%f",lat ];
+                NSMutableString *savedLngString = [[NSMutableString alloc]initWithFormat:@"%f",lng ];
+                NSLog(@"%f,%f",lat,lng);
+                CLLocationCoordinate2D coord = {lat,lng};
+                MKPointAnnotation *point = [[MKPointAnnotation alloc]init];
+                point.coordinate = coord;
+                point.title = fav.placeName;
+                [self.mapView addAnnotation:point];
+                [savedNameArray addObject:point.title];
+                [savedLatArray addObject:savedLatString];
+                [savedLngArray addObject:savedLngString];
+            }
+            
+            int index = [savedNameArray indexOfObject:str];
+            details.nameString = str;
+            double lat = [[savedLatArray objectAtIndex:index]doubleValue];
+            details.locationLatitude = lat;
+            double lng = [[savedLngArray objectAtIndex:index]doubleValue];
+            details.locationLongitude = lng;
+            
         }
         else{
+            
+        int index =[sharedRequest.name indexOfObject:str];
+            
         NSMutableArray * reviews = [sharedRequest.reviewDictionary objectForKey:str];
         
         details.reviewArray = [NSMutableArray arrayWithArray:reviews];
@@ -385,8 +419,8 @@
         details.locationLatitude = lat;
         details.locationLongitude = lng;
         details.nameString = str;
-    
-            [self.navigationController pushViewController:details animated:YES];}}
+        }
+        [self.navigationController pushViewController:details animated:YES];}
     else
     {
         Favourites *fav = (Favourites *)[NSEntityDescription insertNewObjectForEntityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
@@ -423,6 +457,8 @@
         if (![_managedObjectContext save:&error]) {
             NSLog(@"Error %@", [error localizedDescription]);
         }
+        
+        [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"DataSavedSucessfully"];
         
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Added" message:@"Added To Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
@@ -488,6 +524,7 @@
 
 -(void)startSearch
 {
+    self.mapView.showsUserLocation = TRUE;
     _searchString = [[NSString alloc]init];
     _searchString = _searchBar.text;
     [[RequestHandler sharedRquest]getData:_searchString latitude:self.latitudeString longitude:self.longitudeString];
@@ -541,7 +578,7 @@
     
     Favourites *fav = (Favourites *)[NSEntityDescription insertNewObjectForEntityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
     
-    NSMutableString *placeName = [sharedRequest.favArray valueForKey:@"name"];
+    NSString *placeName = [sharedRequest.favArray valueForKey:@"name"];
     
     [fav setPlaceName:placeName];
     
@@ -558,6 +595,7 @@
         NSLog(@"Error %@", [error localizedDescription]);
     }
     
+    [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"DataSavedSucessfully"];
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Added" message:@"Added To Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 
@@ -573,8 +611,6 @@
     NSMutableString *referenceToSave = [sharedRequest.referenceNameArray objectAtIndex:self.indexOfButton];
     
     [[RequestHandler sharedRquest]addToFavFromTable:referenceToSave];
-    
-//    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(saveFromTable) userInfo:nil repeats:NO];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath     // Method to process request when a cell is tapped
