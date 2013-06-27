@@ -20,7 +20,6 @@
 		004DA766176AF9E6001CBB73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA765176AF9E6001CBB73 /* main.m */; };
 		004DA76A176AF9E6001CBB73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA769176AF9E6001CBB73 /* AppDelegate.m */; };
 		004DA76C176AF9E6001CBB73 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 004DA76B176AF9E6001CBB73 /* Default.png */; };
-		004DA76E176AF9E6001CBB73 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 004DA76D176AF9E6001CBB73 /* Default@2x.png */; };
 		004DA770176AF9E6001CBB73 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 004DA76F176AF9E6001CBB73 /* Default-568h@2x.png */; };
 		004DA773176AF9E6001CBB73 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA772176AF9E6001CBB73 /* ViewController.m */; };
 		004DA776176AF9E6001CBB73 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 004DA774176AF9E6001CBB73 /* ViewController_iPhone.xib */; };
@@ -43,6 +42,8 @@
 		004DA7BE176AFAF5001CBB73 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA7B5176AFAF5001CBB73 /* UIImageView+AFNetworking.m */; };
 		004DA7C2176AFB79001CBB73 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DA7C0176AFB79001CBB73 /* DetailViewController.m */; };
 		004DA7C3176AFB79001CBB73 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 004DA7C1176AFB79001CBB73 /* DetailViewController.xib */; };
+		0096AB74177C497C00A1F43E /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0096AB72177C497C00A1F43E /* map@2x.png */; };
+		0096AB76177C49FE00A1F43E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 0096AB75177C49FE00A1F43E /* map.png */; };
 		00D32FEB17787ADF00A238EC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D32FEA17787ADF00A238EC /* MobileCoreServices.framework */; };
 		00D43E0A1773239D001254FC /* favourite.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D43E081773239D001254FC /* favourite.png */; };
 		00D43E0B1773239D001254FC /* favourite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 00D43E091773239D001254FC /* favourite@2x.png */; };
@@ -118,6 +119,8 @@
 		004DA7BF176AFB79001CBB73 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		004DA7C0176AFB79001CBB73 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		004DA7C1176AFB79001CBB73 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		0096AB72177C497C00A1F43E /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map@2x.png"; sourceTree = "<group>"; };
+		0096AB75177C49FE00A1F43E /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map.png; path = ../map.png; sourceTree = "<group>"; };
 		00D32FEA17787ADF00A238EC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		00D43E081773239D001254FC /* favourite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favourite.png; sourceTree = "<group>"; };
 		00D43E091773239D001254FC /* favourite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favourite@2x.png"; sourceTree = "<group>"; };
@@ -304,6 +307,8 @@
 		00D43E0C177323F0001254FC /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0096AB75177C49FE00A1F43E /* map.png */,
+				0096AB72177C497C00A1F43E /* map@2x.png */,
 				003EC45B176F38BA00FEC6E0 /* map_pin.png */,
 				003EC459176F388300FEC6E0 /* map_pin@2x.png */,
 				00D43E081773239D001254FC /* favourite.png */,
@@ -385,7 +390,6 @@
 			files = (
 				004DA764176AF9E6001CBB73 /* InfoPlist.strings in Resources */,
 				004DA76C176AF9E6001CBB73 /* Default.png in Resources */,
-				004DA76E176AF9E6001CBB73 /* Default@2x.png in Resources */,
 				004DA770176AF9E6001CBB73 /* Default-568h@2x.png in Resources */,
 				004DA776176AF9E6001CBB73 /* ViewController_iPhone.xib in Resources */,
 				004DA7C3176AFB79001CBB73 /* DetailViewController.xib in Resources */,
@@ -395,6 +399,8 @@
 				003EC45C176F38BA00FEC6E0 /* map_pin.png in Resources */,
 				00D43E0A1773239D001254FC /* favourite.png in Resources */,
 				00D43E0B1773239D001254FC /* favourite@2x.png in Resources */,
+				0096AB74177C497C00A1F43E /* map@2x.png in Resources */,
+				0096AB76177C49FE00A1F43E /* map.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
