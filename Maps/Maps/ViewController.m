@@ -5,7 +5,7 @@
 #import "MapViewController.h"
 #import "MapDetails.h"
 #import "Favourites.h"
-
+#import "AppDelegate.h"
 
 @interface ViewController ()
 
@@ -125,6 +125,8 @@
 #pragma mark - Restaurants button clicked
 -(void)restaurantButtonClicked:(id)sender{
 
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
+    
     self.pressedButtonName = [sender currentTitle];
     
     NSLog(@"Button pressed: %@", self.pressedButtonName);
@@ -148,6 +150,8 @@
 #pragma mark - Coffee button clicked
 -(void)coffeeButtonClicked:(id)sender{
     
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
+    
     self.pressedButtonName = [sender currentTitle];
     
     NSLog(@"Button pressed: %@", self.pressedButtonName);
@@ -169,6 +173,8 @@
 }
 #pragma mark - Mechanic button clicked
 -(void)mechanicButtonClicked:(id)sender{
+    
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
     
     self.pressedButtonName = [sender currentTitle];
     
@@ -233,6 +239,7 @@
         [self.mapView removeAnnotations:self.mapView.annotations];
         [_spinner startAnimating];
         [self fetchRecords];
+        NSLog(@"%@",self.savedArray);
         for (int i =0; i<[_savedArray count]; i++)
         {
             Favourites *fav = [_savedArray objectAtIndex:i];
@@ -279,6 +286,7 @@
     
         }
     }
+    [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"PerfomDeletion"];
 }
 
 
@@ -362,8 +370,6 @@
         MapDetails *details = [[MapDetails alloc]initWithNibName:@"MapDetails" bundle:nil];
        
         NSString *str = [NSString stringWithFormat:@"%@",point.title];
-    
-//        int index =[sharedRequest.name indexOfObject:str];
         
         if ([self.pressedButtonName isEqualToString:@"Coffee Shops"] || [self.pressedButtonName isEqualToString:@"Restaurants"] || [self.pressedButtonName isEqualToString:@"Mechanics"])
         {
@@ -422,46 +428,77 @@
         }
         [self.navigationController pushViewController:details animated:YES];}
     else
-    {
-        Favourites *fav = (Favourites *)[NSEntityDescription insertNewObjectForEntityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
+    {   //Detleting annotations from map (favorites)
+            NSString *str = [NSString stringWithFormat:@"%@",point.title];
+            if ([[NSUserDefaults standardUserDefaults]boolForKey:@"PerfomDeletion"])
+            {
+                NSMutableArray *nameToBeRemoved = [[NSMutableArray alloc]init];
+                NSString *name;
+                for (int i =0; i<[_savedArray count]; i++)
+                {
+                    Favourites *fav = [_savedArray objectAtIndex:i];
+                    name = [[NSMutableString alloc]initWithFormat:@"%@",fav.placeName];
+                    [nameToBeRemoved addObject:name];
+                }
+                int indexToBeRemoved = [nameToBeRemoved indexOfObject:name];
+                NSManagedObject *newContext = [self.savedArray objectAtIndex:indexToBeRemoved];
+                [_managedObjectContext deleteObject:newContext];
+                
+                NSError *error;
+                
+                if (![_managedObjectContext save:&error]) {
+                    NSLog(@"Error %@", [error localizedDescription]);
+                }
+                
+                [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"DataSavedSucessfully"];
+                
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Removed" message:@"Removed from Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                
+                [self.mapView removeAnnotation:point];
+            }
         
-        NSString *str = [NSString stringWithFormat:@"%@",point.title];
+        //Adding annotations to map(favorites)
+            else
+            {
+            Favourites *fav = (Favourites *)[NSEntityDescription insertNewObjectForEntityForName:@"Favourites" inManagedObjectContext:_managedObjectContext];
         
-        int index =[sharedRequest.name indexOfObject:str];
+            int index =[sharedRequest.name indexOfObject:str];
         
-        [fav setPlaceName:str];
+            [fav setPlaceName:str];
         
-        if ([self.pressedButtonName isEqualToString:@"Coffee Shops"] || [self.pressedButtonName isEqualToString:@"Restaurants"] || [self.pressedButtonName isEqualToString:@"Mechanics"])
-        {
-            double lat = [[sharedRequest.placeLatAray objectAtIndex:index]doubleValue];
-            NSString *str1 = [[NSString alloc]initWithFormat:@"%f",lat ];
-            double lng = [[sharedRequest.placeLngAray objectAtIndex:index]doubleValue];
-            NSString *str2 = [[NSString alloc]initWithFormat:@"%f",lng];
+            if ([self.pressedButtonName isEqualToString:@"Coffee Shops"] || [self.pressedButtonName isEqualToString:@"Restaurants"] || [self.pressedButtonName isEqualToString:@"Mechanics"])
+            {
+                double lat = [[sharedRequest.placeLatAray objectAtIndex:index]doubleValue];
+                NSString *str1 = [[NSString alloc]initWithFormat:@"%f",lat ];
+                double lng = [[sharedRequest.placeLngAray objectAtIndex:index]doubleValue];
+                NSString *str2 = [[NSString alloc]initWithFormat:@"%f",lng];
             
-            [fav setPlaceLatitude:str1];
-            [fav setPlaceLongitude:str2];
+                [fav setPlaceLatitude:str1];
+                [fav setPlaceLongitude:str2];
+            }
+        
+            else
+            {
+                double lat = [[sharedRequest.latArray objectAtIndex:index]doubleValue];
+                NSString *str1 = [[NSString alloc]initWithFormat:@"%f",lat ];
+                double lng = [[sharedRequest.lngArray objectAtIndex:index]doubleValue];
+                NSString *str2 = [[NSString alloc]initWithFormat:@"%f",lng];
+        
+                [fav setPlaceLatitude:str1];
+                [fav setPlaceLongitude:str2];
+            }
+            NSError *error;
+        
+            if (![_managedObjectContext save:&error]) {
+                NSLog(@"Error %@", [error localizedDescription]);
+            }
+        
+            [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"DataSavedSucessfully"];
+        
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Added" message:@"Added To Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
         }
-        
-        else
-        {
-        double lat = [[sharedRequest.latArray objectAtIndex:index]doubleValue];
-        NSString *str1 = [[NSString alloc]initWithFormat:@"%f",lat ];
-        double lng = [[sharedRequest.lngArray objectAtIndex:index]doubleValue];
-        NSString *str2 = [[NSString alloc]initWithFormat:@"%f",lng];
-        
-        [fav setPlaceLatitude:str1];
-        [fav setPlaceLongitude:str2];
-        }
-        NSError *error;
-        
-        if (![_managedObjectContext save:&error]) {
-            NSLog(@"Error %@", [error localizedDescription]);
-        }
-        
-        [[NSUserDefaults standardUserDefaults]setBool:TRUE forKey:@"DataSavedSucessfully"];
-        
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Added" message:@"Added To Favourites" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
     }
 }
 
@@ -497,6 +534,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
     
     if (self.mapView.annotations == nil) {
         NSLog(@"Map is already nil!!");
