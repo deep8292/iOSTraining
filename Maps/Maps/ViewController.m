@@ -86,6 +86,7 @@
     [self creatingButtons];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"Doreload" object:nil];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showOnMap) name:@"showAllData" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(saveFromTable) name:@"newList" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showPlacesData) name:@"showPlaces" object:nil];
