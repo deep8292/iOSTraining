@@ -3,10 +3,12 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "Favourites.h"
-@interface ViewController : UIViewController<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,MKMapViewDelegate,MKAnnotation>
+#import <FacebookSDK/FacebookSDK.h>
+
+@interface ViewController : UIViewController<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate,MKMapViewDelegate,MKAnnotation,FBLoginViewDelegate>
 {RequestHandler *sharedRequest;
     CLLocationManager *locationManager;
-    UIButton *restaurantButton,*coffeshopButton,*mechanicButton,*favouriteButton;
+    UIButton *restaurantButton,*coffeshopButton,*mechanicButton,*favouriteButton,*facebookButton;
 }
 @property (strong,nonatomic)MKMapView *mapView;
 @property (strong,nonatomic)IBOutlet UISearchBar *searchBar;

@@ -5,11 +5,15 @@
 #import "ViewController.h"
 #import "MapDetails.h"
 #import <CoreData/CoreData.h>
+#import <FacebookSDK/FBSessionTokenCachingStrategy.h>
+#import "FbLoginViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [FBProfilePictureView class];
+    [FBFriendPickerViewController class];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
     self.viewController.managedObjectContext = [self managedObjectContext];
@@ -21,6 +25,18 @@
     self.window.rootViewController = self.navigation;
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                    fallbackHandler:^(FBAppCall *call) {
+                        NSLog(@"In fallback handler");
+                    }];
 }
 
 - (NSManagedObjectContext *) managedObjectContext {

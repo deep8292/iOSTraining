@@ -6,7 +6,8 @@
 #import "MapDetails.h"
 #import "Favourites.h"
 #import "AppDelegate.h"
-
+#import "FbLoginViewController.h"
+#import "AppDelegate.h"
 @interface ViewController ()
 
 @property (strong,nonatomic)UIActivityIndicatorView *spinner;
@@ -28,6 +29,7 @@
 
 @implementation ViewController
 
+
 -(id)init{
     
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -35,7 +37,7 @@
     return [super init];
 }
 
-
+#pragma mark - View Life Cycle
 -(void)viewWillAppear:(BOOL)animated{
     [_searchBar resignFirstResponder];
     self.navigationController.navigationBar.hidden = TRUE;
@@ -90,8 +92,25 @@
     
 }
 
+#pragma mark - Facebook Button Pressed
+
+-(void)facebookButtonPressed{
+    
+    FbLoginViewController *login = [[FbLoginViewController alloc]initWithNibName:@"FbLoginViewController" bundle:nil];
+    [self.navigationController pushViewController:login animated:YES];
+}
+
+
 #pragma mark - Adding buttons
 -(void)creatingButtons{
+    
+    
+    facebookButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [facebookButton setBackgroundImage:[UIImage imageNamed:@"fbButton.png"] forState:UIControlStateNormal];
+    facebookButton.frame = CGRectMake(20, 350, 20, 20);
+    [self.mapView addSubview:facebookButton];
+    [facebookButton addTarget:self action:@selector(facebookButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    facebookButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     restaurantButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [restaurantButton setTitle:@"Restaurants" forState:UIControlStateNormal];
