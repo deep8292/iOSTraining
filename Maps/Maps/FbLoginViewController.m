@@ -1,19 +1,15 @@
-//
-//  FbLoginViewController.m
-//  Maps
-//
-//  Created by Deepak Khiwani on 28/06/13.
-//  Copyright (c) 2013 Deepak Khiwani. All rights reserved.
-//
+
 
 #import "FbLoginViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface FbLoginViewController ()<FBLoginViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePic;
 @property (strong,nonatomic) UILabel *userName;
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
+@property (strong,nonatomic) NSArray *friendList;
 @end
 
 @implementation FbLoginViewController
@@ -33,18 +29,22 @@
     
     self.navigationController.navigationBar.hidden = FALSE;
     
+    //User Name Label
     self.userName = [[UILabel alloc]initWithFrame:CGRectMake(99, 230, 161, 31)];
-    self.userName.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    self.userName.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:self.userName];
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 320, 320, 190) style:UITableViewStylePlain];
-//    self.tableView.dataSource =self;
-//    self.tableView.delegate = self;
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    //Setting up table view
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 270, 320, 280) style:UITableViewStylePlain];
+    self.tableView.dataSource =self;
+    self.tableView.delegate = self;
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.tableView];
     
-    FBLoginView *loginview = [[FBLoginView alloc] init];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTable) name:@"FriendList" object:nil ];
     
+    //Settting up Login View
+    FBLoginView *loginview = [[FBLoginView alloc] init];
     loginview.frame = CGRectOffset(loginview.frame, 5, 5);
     loginview.delegate = self;
     [self.view addSubview:loginview];
@@ -54,6 +54,105 @@
 
 
 
+#pragma mark - Reloading Table
+-(void)reloadTable{
+    
+    [self.tableView reloadData];
+}
+
+
+#pragma mark - Table
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.friendList count];
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString *cellID = @"CellIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    
+//    if (cell== nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+//    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+
+    UIImageView *profilePhoto = [[UIImageView alloc]initWithFrame:CGRectMake(0, 8, 50, 30)];
+
+    NSString *str = [[self.friendList objectAtIndex:indexPath.row]objectForKey:@"pic_square"];
+    NSURL *url = [NSURL URLWithString:str];
+    
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+            
+             
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            UIImage *image = [UIImage imageWithData:data];
+    
+            dispatch_sync(dispatch_get_main_queue(), ^(void) {
+                
+                [profilePhoto setImage:image];
+    
+                [cell.contentView addSubview:profilePhoto];
+                
+                
+            });
+        });
+    
+    
+    [self setRoundedView:profilePhoto toDiameter:40.0f];
+    [profilePhoto.layer setBorderWidth:2.0];
+    profilePhoto.clipsToBounds = YES;
+    
+    UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(50, 0, 250, 44)];
+    
+    name.text = [[self.friendList objectAtIndex:indexPath.row]objectForKey:@"name"];
+    
+    [cell.contentView addSubview:name];
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Method to fetch friend List
+- (void)userFriendList {
+    
+    NSString *query =@"SELECT name, pic_square FROM user WHERE uid in (SELECT uid2 FROM friend where uid1 = me())";
+    
+    // Set up the query parameter
+    NSDictionary *queryParam =
+    [NSDictionary dictionaryWithObjectsAndKeys:query, @"q", nil];
+    // Make the API request that uses FQL
+    [FBRequestConnection startWithGraphPath:@"/fql"
+                                 parameters:queryParam
+                                 HTTPMethod:@"GET"
+                          completionHandler:^(FBRequestConnection *connection,
+                                              id result,
+                                              NSError *error) {
+                              if (error) {
+                                  NSLog(@"Error: %@", [error localizedDescription]);
+                              } else {
+                                  NSLog(@"Result: %@", result);
+                                  // show result
+                                  self.friendList = (NSArray *) [result objectForKey:@"data"];
+//
+                                  NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
+                                  
+                                  NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+                                  
+                                 NSArray *a =[self.friendList sortedArrayUsingDescriptors: sortDescriptors];
+                                  
+                                  NSLog(@"%@",a);
+                                 
+                                  [[NSNotificationCenter defaultCenter]postNotificationName:@"FriendList" object:nil];
+                              }
+                          }];
+}
+
+#pragma mark - Facebook Delegates
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
 
 }
@@ -66,6 +165,7 @@
     self.loggedInUser = user;
     [self setRoundedView:self.profilePic toDiameter:100.0f];
     [self.profilePic.layer setBorderWidth:3.0];
+    [self userFriendList];
 }
 
 -(void)setRoundedView:(UIImageView *)roundedView toDiameter:(float)newSize;
@@ -78,59 +178,15 @@
 }
 
 
--(void)userFriends{
-    
-    FBFriendPickerViewController *friendPickerController = [[FBFriendPickerViewController alloc] init];
-    friendPickerController.title = @"Pick Friends";
-    [friendPickerController loadData];
-    
-    // Use the modal wrapper method to display the picker.
-    [friendPickerController presentModallyFromViewController:self animated:YES handler:
-     ^(FBViewController *sender, BOOL donePressed) {
-         
-         if (!donePressed) {
-             return;
-         }
-         
-         NSString *message;
-         
-         if (friendPickerController.selection.count == 0) {
-             message = @"<No Friends Selected>";
-         } else {
-             
-             NSMutableString *text = [[NSMutableString alloc] init];
-             
-             // we pick up the users from the selection, and create a string that we use to update the text view
-             // at the bottom of the display; note that self.selection is a property inherited from our base class
-             for (id<FBGraphUser> user in friendPickerController.selection) {
-                 if ([text length]) {
-                     [text appendString:@", "];
-                 }
-                 [text appendString:user.name];
-             }
-             message = text;
-         }
-         
-         [[[UIAlertView alloc] initWithTitle:@"You Picked:"
-                                     message:message
-                                    delegate:nil
-                           cancelButtonTitle:@"OK"
-                           otherButtonTitles:nil]
-          show];
-     }];
-
-}
-
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView{
     self.profilePic.profileID = nil;
     self.userName.text = nil;
     self.loggedInUser = nil;
+    self.tableView = nil;
 }
 
 - (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
-    // see https://developers.facebook.com/docs/reference/api/errors/ for general guidance on error handling for Facebook API
-    // our policy here is to let the login view handle errors, but to log the results
-    NSLog(@"FBLoginView encountered an error=%@", error);
+        NSLog(@"FBLoginView encountered an error=%@", error);
 }
 
 
