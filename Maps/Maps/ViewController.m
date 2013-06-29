@@ -145,7 +145,7 @@
 #pragma mark - Restaurants button clicked
 -(void)restaurantButtonClicked:(id)sender{
 
-    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerfomDeletion"];
     
     self.pressedButtonName = [sender currentTitle];
     
@@ -170,7 +170,7 @@
 #pragma mark - Coffee button clicked
 -(void)coffeeButtonClicked:(id)sender{
     
-    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerfomDeletion"];
     
     self.pressedButtonName = [sender currentTitle];
     
@@ -194,7 +194,7 @@
 #pragma mark - Mechanic button clicked
 -(void)mechanicButtonClicked:(id)sender{
     
-    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerfomDeletion"];
     
     self.pressedButtonName = [sender currentTitle];
     
@@ -554,7 +554,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerofomDeletion"];
+    [[NSUserDefaults standardUserDefaults]setBool:FALSE forKey:@"PerfomDeletion"];
     
     if (self.mapView.annotations == nil) {
         NSLog(@"Map is already nil!!");
