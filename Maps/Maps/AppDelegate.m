@@ -13,7 +13,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [FBProfilePictureView class];
-    [FBFriendPickerViewController class];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
     self.viewController.managedObjectContext = [self managedObjectContext];

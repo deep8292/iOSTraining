@@ -202,8 +202,6 @@
 		004DA74D176AF9E6001CBB73 = {
 			isa = PBXGroup;
 			children = (
-				00FB9D6A177DB7EB005E8B7B /* QuartzCore.framework */,
-				00FB9D5C177D819C005E8B7B /* libsqlite3.0.dylib */,
 				004DA75F176AF9E6001CBB73 /* Maps */,
 				004DA786176AF9E6001CBB73 /* MapsTests */,
 				004DA758176AF9E6001CBB73 /* Frameworks */,
@@ -223,6 +221,8 @@
 		004DA758176AF9E6001CBB73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				00FB9D6A177DB7EB005E8B7B /* QuartzCore.framework */,
+				00FB9D5C177D819C005E8B7B /* libsqlite3.0.dylib */,
 				00FB9D3A177D60FC005E8B7B /* FBUserSettingsViewResources.bundle */,
 				00FB9D36177D60BA005E8B7B /* Accounts.framework */,
 				00FB9D37177D60BA005E8B7B /* AddressBook.framework */,
