@@ -3,7 +3,7 @@
 #import "FbLoginViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <FacebookSDK/FacebookSDK.h>
-
+#import "UIImageView+AFNetworking.h"
 @interface FbLoginViewController ()<FBLoginViewDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePic;
 @property (strong,nonatomic) UILabel *userName;
@@ -82,23 +82,36 @@
 
     NSString *str = [[self.friendList objectAtIndex:indexPath.row]objectForKey:@"pic_square"];
     NSURL *url = [NSURL URLWithString:str];
+    NSURLRequest *requestURL = [NSURLRequest requestWithURL:url];
     
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-            
-             
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            UIImage *image = [UIImage imageWithData:data];
+//    NSData *data = [NSData dataWithContentsOfURL:url];
+//    UIImage *image = [UIImage imageWithData:data];
     
-            dispatch_sync(dispatch_get_main_queue(), ^(void) {
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+//            
+//             
+//            NSData *data = [NSData dataWithContentsOfURL:url];
+//            UIImage *image = [UIImage imageWithData:data];
+//    
+//            dispatch_sync(dispatch_get_main_queue(), ^(void) {
+//                
+//                [profilePhoto setImage:image];
+//    
+//                [cell.contentView addSubview:profilePhoto];
+//                
+//                
+//            });
+//        });^(NSURLRequest *request,NSHTTPURLResponse *response, UIImage *image)
+    
+    [profilePhoto setImageWithURLRequest:requestURL placeholderImage:nil success:^(NSURLRequest *request,NSHTTPURLResponse *response, UIImage *image){
                 
-                [profilePhoto setImage:image];
+        [profilePhoto setImage:image];
+        
+    }failure:^(NSURLRequest *request,NSHTTPURLResponse *response, NSError *error){
+        NSLog(@"Request Failed with Error: %@, %@", error, error.userInfo);
+    }];
     
-                [cell.contentView addSubview:profilePhoto];
-                
-                
-            });
-        });
-    
+    [cell.contentView addSubview:profilePhoto];
     
     [self setRoundedView:profilePhoto toDiameter:40.0f];
     [profilePhoto.layer setBorderWidth:2.0];
@@ -138,7 +151,7 @@
                                   NSLog(@"Result: %@", result);
                                   // show result
                                   self.friendList = (NSArray *) [result objectForKey:@"data"];
-//
+
                                   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"name" ascending:YES];
                                   
                                   NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
