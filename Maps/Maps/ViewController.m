@@ -374,9 +374,16 @@
         self.favButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [self.favButton setImage:[UIImage imageNamed:@"favourite.png"] forState:UIControlStateNormal];
         pinView.leftCalloutAccessoryView = self.favButton;
+        [pinView setSelected:YES animated:YES];
+        [self performSelector:@selector(selectAnnotation:) withObject:annotation afterDelay:0.1];
     }
     return pinView;
     
+}
+
+- (void)selectAnnotation:(id < MKAnnotation >)annotation
+{
+    [self.mapView selectAnnotation:annotation animated:NO];
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control     // Method to process request when accessory button is tapped

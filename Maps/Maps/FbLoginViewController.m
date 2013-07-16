@@ -195,7 +195,9 @@
     self.profilePic.profileID = nil;
     self.userName.text = nil;
     self.loggedInUser = nil;
+    
     self.tableView = nil;
+    [self.tableView reloadData];
 }
 
 - (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
