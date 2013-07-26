@@ -243,7 +243,7 @@
         }
         else if (indexPath.row == 1){
             [cell addSubview:self.mapView];
-            
+            [self.mapView setScrollEnabled:FALSE];
         }
     }
     else{

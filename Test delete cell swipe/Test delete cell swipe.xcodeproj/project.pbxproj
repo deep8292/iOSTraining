@@ -1,0 +1,474 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		002E0C3817A13B8900FE33DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3717A13B8900FE33DB /* UIKit.framework */; };
+		002E0C3A17A13B8900FE33DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3917A13B8900FE33DB /* Foundation.framework */; };
+		002E0C3C17A13B8900FE33DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3B17A13B8900FE33DB /* CoreGraphics.framework */; };
+		002E0C4217A13B8900FE33DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002E0C4017A13B8900FE33DB /* InfoPlist.strings */; };
+		002E0C4417A13B8900FE33DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 002E0C4317A13B8900FE33DB /* main.m */; };
+		002E0C4817A13B8900FE33DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 002E0C4717A13B8900FE33DB /* AppDelegate.m */; };
+		002E0C4A17A13B8900FE33DB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 002E0C4917A13B8900FE33DB /* Default.png */; };
+		002E0C4C17A13B8900FE33DB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002E0C4B17A13B8900FE33DB /* Default@2x.png */; };
+		002E0C4E17A13B8900FE33DB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 002E0C4D17A13B8900FE33DB /* Default-568h@2x.png */; };
+		002E0C5117A13B8900FE33DB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 002E0C5017A13B8900FE33DB /* ViewController.m */; };
+		002E0C5417A13B8900FE33DB /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 002E0C5217A13B8900FE33DB /* ViewController.xib */; };
+		002E0C5C17A13B8900FE33DB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C5B17A13B8900FE33DB /* SenTestingKit.framework */; };
+		002E0C5D17A13B8900FE33DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3717A13B8900FE33DB /* UIKit.framework */; };
+		002E0C5E17A13B8900FE33DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3917A13B8900FE33DB /* Foundation.framework */; };
+		002E0C6617A13B8900FE33DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 002E0C6417A13B8900FE33DB /* InfoPlist.strings */; };
+		002E0C6917A13B8A00FE33DB /* Test_delete_cell_swipeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 002E0C6817A13B8A00FE33DB /* Test_delete_cell_swipeTests.m */; };
+		002E0C7417A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 002E0C7317A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		002E0C5F17A13B8900FE33DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 002E0C2C17A13B8900FE33DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 002E0C3317A13B8900FE33DB;
+			remoteInfo = "Test delete cell swipe";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		002E0C3417A13B8900FE33DB /* Test delete cell swipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test delete cell swipe.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		002E0C3717A13B8900FE33DB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		002E0C3917A13B8900FE33DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		002E0C3B17A13B8900FE33DB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		002E0C3F17A13B8900FE33DB /* Test delete cell swipe-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test delete cell swipe-Info.plist"; sourceTree = "<group>"; };
+		002E0C4117A13B8900FE33DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		002E0C4317A13B8900FE33DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		002E0C4517A13B8900FE33DB /* Test delete cell swipe-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Test delete cell swipe-Prefix.pch"; sourceTree = "<group>"; };
+		002E0C4617A13B8900FE33DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		002E0C4717A13B8900FE33DB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		002E0C4917A13B8900FE33DB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		002E0C4B17A13B8900FE33DB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		002E0C4D17A13B8900FE33DB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		002E0C4F17A13B8900FE33DB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		002E0C5017A13B8900FE33DB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		002E0C5317A13B8900FE33DB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		002E0C5A17A13B8900FE33DB /* Test delete cell swipeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Test delete cell swipeTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		002E0C5B17A13B8900FE33DB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		002E0C6317A13B8900FE33DB /* Test delete cell swipeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test delete cell swipeTests-Info.plist"; sourceTree = "<group>"; };
+		002E0C6517A13B8900FE33DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		002E0C6717A13B8A00FE33DB /* Test_delete_cell_swipeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test_delete_cell_swipeTests.h; sourceTree = "<group>"; };
+		002E0C6817A13B8A00FE33DB /* Test_delete_cell_swipeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test_delete_cell_swipeTests.m; sourceTree = "<group>"; };
+		002E0C7217A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFJLeftSwipeDeleteTableView.h; sourceTree = "<group>"; };
+		002E0C7317A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFJLeftSwipeDeleteTableView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		002E0C3117A13B8900FE33DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002E0C3817A13B8900FE33DB /* UIKit.framework in Frameworks */,
+				002E0C3A17A13B8900FE33DB /* Foundation.framework in Frameworks */,
+				002E0C3C17A13B8900FE33DB /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		002E0C5617A13B8900FE33DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002E0C5C17A13B8900FE33DB /* SenTestingKit.framework in Frameworks */,
+				002E0C5D17A13B8900FE33DB /* UIKit.framework in Frameworks */,
+				002E0C5E17A13B8900FE33DB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		002E0C2B17A13B8900FE33DB = {
+			isa = PBXGroup;
+			children = (
+				002E0C3D17A13B8900FE33DB /* Test delete cell swipe */,
+				002E0C6117A13B8900FE33DB /* Test delete cell swipeTests */,
+				002E0C3617A13B8900FE33DB /* Frameworks */,
+				002E0C3517A13B8900FE33DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		002E0C3517A13B8900FE33DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				002E0C3417A13B8900FE33DB /* Test delete cell swipe.app */,
+				002E0C5A17A13B8900FE33DB /* Test delete cell swipeTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		002E0C3617A13B8900FE33DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				002E0C3717A13B8900FE33DB /* UIKit.framework */,
+				002E0C3917A13B8900FE33DB /* Foundation.framework */,
+				002E0C3B17A13B8900FE33DB /* CoreGraphics.framework */,
+				002E0C5B17A13B8900FE33DB /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		002E0C3D17A13B8900FE33DB /* Test delete cell swipe */ = {
+			isa = PBXGroup;
+			children = (
+				002E0C4617A13B8900FE33DB /* AppDelegate.h */,
+				002E0C4717A13B8900FE33DB /* AppDelegate.m */,
+				002E0C4F17A13B8900FE33DB /* ViewController.h */,
+				002E0C5017A13B8900FE33DB /* ViewController.m */,
+				002E0C5217A13B8900FE33DB /* ViewController.xib */,
+				002E0C7217A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.h */,
+				002E0C7317A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.m */,
+				002E0C3E17A13B8900FE33DB /* Supporting Files */,
+			);
+			path = "Test delete cell swipe";
+			sourceTree = "<group>";
+		};
+		002E0C3E17A13B8900FE33DB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				002E0C3F17A13B8900FE33DB /* Test delete cell swipe-Info.plist */,
+				002E0C4017A13B8900FE33DB /* InfoPlist.strings */,
+				002E0C4317A13B8900FE33DB /* main.m */,
+				002E0C4517A13B8900FE33DB /* Test delete cell swipe-Prefix.pch */,
+				002E0C4917A13B8900FE33DB /* Default.png */,
+				002E0C4B17A13B8900FE33DB /* Default@2x.png */,
+				002E0C4D17A13B8900FE33DB /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		002E0C6117A13B8900FE33DB /* Test delete cell swipeTests */ = {
+			isa = PBXGroup;
+			children = (
+				002E0C6717A13B8A00FE33DB /* Test_delete_cell_swipeTests.h */,
+				002E0C6817A13B8A00FE33DB /* Test_delete_cell_swipeTests.m */,
+				002E0C6217A13B8900FE33DB /* Supporting Files */,
+			);
+			path = "Test delete cell swipeTests";
+			sourceTree = "<group>";
+		};
+		002E0C6217A13B8900FE33DB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				002E0C6317A13B8900FE33DB /* Test delete cell swipeTests-Info.plist */,
+				002E0C6417A13B8900FE33DB /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		002E0C3317A13B8900FE33DB /* Test delete cell swipe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 002E0C6C17A13B8A00FE33DB /* Build configuration list for PBXNativeTarget "Test delete cell swipe" */;
+			buildPhases = (
+				002E0C3017A13B8900FE33DB /* Sources */,
+				002E0C3117A13B8900FE33DB /* Frameworks */,
+				002E0C3217A13B8900FE33DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Test delete cell swipe";
+			productName = "Test delete cell swipe";
+			productReference = 002E0C3417A13B8900FE33DB /* Test delete cell swipe.app */;
+			productType = "com.apple.product-type.application";
+		};
+		002E0C5917A13B8900FE33DB /* Test delete cell swipeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 002E0C6F17A13B8A00FE33DB /* Build configuration list for PBXNativeTarget "Test delete cell swipeTests" */;
+			buildPhases = (
+				002E0C5517A13B8900FE33DB /* Sources */,
+				002E0C5617A13B8900FE33DB /* Frameworks */,
+				002E0C5717A13B8900FE33DB /* Resources */,
+				002E0C5817A13B8900FE33DB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				002E0C6017A13B8900FE33DB /* PBXTargetDependency */,
+			);
+			name = "Test delete cell swipeTests";
+			productName = "Test delete cell swipeTests";
+			productReference = 002E0C5A17A13B8900FE33DB /* Test delete cell swipeTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		002E0C2C17A13B8900FE33DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Deepak Khiwani";
+			};
+			buildConfigurationList = 002E0C2F17A13B8900FE33DB /* Build configuration list for PBXProject "Test delete cell swipe" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 002E0C2B17A13B8900FE33DB;
+			productRefGroup = 002E0C3517A13B8900FE33DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				002E0C3317A13B8900FE33DB /* Test delete cell swipe */,
+				002E0C5917A13B8900FE33DB /* Test delete cell swipeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		002E0C3217A13B8900FE33DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002E0C4217A13B8900FE33DB /* InfoPlist.strings in Resources */,
+				002E0C4A17A13B8900FE33DB /* Default.png in Resources */,
+				002E0C4C17A13B8900FE33DB /* Default@2x.png in Resources */,
+				002E0C4E17A13B8900FE33DB /* Default-568h@2x.png in Resources */,
+				002E0C5417A13B8900FE33DB /* ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		002E0C5717A13B8900FE33DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002E0C6617A13B8900FE33DB /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		002E0C5817A13B8900FE33DB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		002E0C3017A13B8900FE33DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002E0C4417A13B8900FE33DB /* main.m in Sources */,
+				002E0C4817A13B8900FE33DB /* AppDelegate.m in Sources */,
+				002E0C5117A13B8900FE33DB /* ViewController.m in Sources */,
+				002E0C7417A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		002E0C5517A13B8900FE33DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002E0C6917A13B8A00FE33DB /* Test_delete_cell_swipeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		002E0C6017A13B8900FE33DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 002E0C3317A13B8900FE33DB /* Test delete cell swipe */;
+			targetProxy = 002E0C5F17A13B8900FE33DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		002E0C4017A13B8900FE33DB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002E0C4117A13B8900FE33DB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		002E0C5217A13B8900FE33DB /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002E0C5317A13B8900FE33DB /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+		002E0C6417A13B8900FE33DB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				002E0C6517A13B8900FE33DB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		002E0C6A17A13B8A00FE33DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		002E0C6B17A13B8A00FE33DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		002E0C6D17A13B8A00FE33DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test delete cell swipe/Test delete cell swipe-Prefix.pch";
+				INFOPLIST_FILE = "Test delete cell swipe/Test delete cell swipe-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		002E0C6E17A13B8A00FE33DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test delete cell swipe/Test delete cell swipe-Prefix.pch";
+				INFOPLIST_FILE = "Test delete cell swipe/Test delete cell swipe-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		002E0C7017A13B8A00FE33DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Test delete cell swipe.app/Test delete cell swipe";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test delete cell swipe/Test delete cell swipe-Prefix.pch";
+				INFOPLIST_FILE = "Test delete cell swipeTests/Test delete cell swipeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		002E0C7117A13B8A00FE33DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Test delete cell swipe.app/Test delete cell swipe";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Test delete cell swipe/Test delete cell swipe-Prefix.pch";
+				INFOPLIST_FILE = "Test delete cell swipeTests/Test delete cell swipeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		002E0C2F17A13B8900FE33DB /* Build configuration list for PBXProject "Test delete cell swipe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				002E0C6A17A13B8A00FE33DB /* Debug */,
+				002E0C6B17A13B8A00FE33DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		002E0C6C17A13B8A00FE33DB /* Build configuration list for PBXNativeTarget "Test delete cell swipe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				002E0C6D17A13B8A00FE33DB /* Debug */,
+				002E0C6E17A13B8A00FE33DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		002E0C6F17A13B8A00FE33DB /* Build configuration list for PBXNativeTarget "Test delete cell swipeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				002E0C7017A13B8A00FE33DB /* Debug */,
+				002E0C7117A13B8A00FE33DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 002E0C2C17A13B8900FE33DB /* Project object */;
+}
