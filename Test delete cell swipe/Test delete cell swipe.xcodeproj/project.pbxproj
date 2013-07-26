@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000DCF7C17A2460100B8FB23 /* UIColor+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 000DCF7917A2460100B8FB23 /* UIColor+FlatUI.m */; };
+		000DCF7D17A2460100B8FB23 /* UITableViewCell+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 000DCF7B17A2460100B8FB23 /* UITableViewCell+FlatUI.m */; };
+		000DCF8017A2462D00B8FB23 /* FUICellBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 000DCF7F17A2462D00B8FB23 /* FUICellBackgroundView.m */; };
 		002E0C3817A13B8900FE33DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3717A13B8900FE33DB /* UIKit.framework */; };
 		002E0C3A17A13B8900FE33DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3917A13B8900FE33DB /* Foundation.framework */; };
 		002E0C3C17A13B8900FE33DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002E0C3B17A13B8900FE33DB /* CoreGraphics.framework */; };
@@ -37,6 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		000DCF7817A2460100B8FB23 /* UIColor+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatUI.h"; sourceTree = "<group>"; };
+		000DCF7917A2460100B8FB23 /* UIColor+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FlatUI.m"; sourceTree = "<group>"; };
+		000DCF7A17A2460100B8FB23 /* UITableViewCell+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+FlatUI.h"; sourceTree = "<group>"; };
+		000DCF7B17A2460100B8FB23 /* UITableViewCell+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FlatUI.m"; sourceTree = "<group>"; };
+		000DCF7E17A2462D00B8FB23 /* FUICellBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUICellBackgroundView.h; sourceTree = "<group>"; };
+		000DCF7F17A2462D00B8FB23 /* FUICellBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUICellBackgroundView.m; sourceTree = "<group>"; };
 		002E0C3417A13B8900FE33DB /* Test delete cell swipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test delete cell swipe.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		002E0C3717A13B8900FE33DB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		002E0C3917A13B8900FE33DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -127,6 +136,12 @@
 				002E0C5217A13B8900FE33DB /* ViewController.xib */,
 				002E0C7217A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.h */,
 				002E0C7317A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.m */,
+				000DCF7817A2460100B8FB23 /* UIColor+FlatUI.h */,
+				000DCF7917A2460100B8FB23 /* UIColor+FlatUI.m */,
+				000DCF7A17A2460100B8FB23 /* UITableViewCell+FlatUI.h */,
+				000DCF7B17A2460100B8FB23 /* UITableViewCell+FlatUI.m */,
+				000DCF7E17A2462D00B8FB23 /* FUICellBackgroundView.h */,
+				000DCF7F17A2462D00B8FB23 /* FUICellBackgroundView.m */,
 				002E0C3E17A13B8900FE33DB /* Supporting Files */,
 			);
 			path = "Test delete cell swipe";
@@ -279,6 +294,9 @@
 				002E0C4817A13B8900FE33DB /* AppDelegate.m in Sources */,
 				002E0C5117A13B8900FE33DB /* ViewController.m in Sources */,
 				002E0C7417A13B9800FE33DB /* YFJLeftSwipeDeleteTableView.m in Sources */,
+				000DCF7C17A2460100B8FB23 /* UIColor+FlatUI.m in Sources */,
+				000DCF7D17A2460100B8FB23 /* UITableViewCell+FlatUI.m in Sources */,
+				000DCF8017A2462D00B8FB23 /* FUICellBackgroundView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +477,7 @@
 				002E0C6E17A13B8A00FE33DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		002E0C6F17A13B8A00FE33DB /* Build configuration list for PBXNativeTarget "Test delete cell swipeTests" */ = {
 			isa = XCConfigurationList;
@@ -467,6 +486,7 @@
 				002E0C7117A13B8A00FE33DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

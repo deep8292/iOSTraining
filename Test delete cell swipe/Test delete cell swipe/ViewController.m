@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "YFJLeftSwipeDeleteTableView.h"
+#import "UITableViewCell+FlatUI.h"
+#import "UIColor+FlatUI.h"
 @interface ViewController (){
     UIButton *deleteButton;
 }
@@ -25,6 +27,8 @@
     self.tableView = [[YFJLeftSwipeDeleteTableView alloc] initWithFrame:frame];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor cloudsColor];
+    self.tableView.separatorColor = [UIColor cloudsColor];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     [self.view addSubview:self.tableView];
 }
@@ -50,8 +54,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    cell = [UITableViewCell configureFlatCellWithColor:[UIColor greenSeaColor] selectedColor:[UIColor cloudsColor] style:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
+    cell.cornerRadius = 5.f;
+    cell.separatorHeight = 0.0f;
+    cell.textLabel.textColor = [UIColor cloudsColor];
     cell.textLabel.text = [self.array objectAtIndex:indexPath.row];
     return cell;
 }
