@@ -10,6 +10,8 @@
 #import "YFJLeftSwipeDeleteTableView.h"
 #import "UITableViewCell+FlatUI.h"
 #import "UIColor+FlatUI.h"
+#import "UINavigationBar+FlatUI.h"
+
 @interface ViewController (){
     UIButton *deleteButton;
 }
@@ -22,6 +24,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.title = @"Flat Table View";
+    [self.navigationController.navigationBar configureFlatNavigationBarWithColor:[UIColor midnightBlueColor]];
+
     self.array = [[NSMutableArray alloc]initWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20", nil];
      CGRect frame = self.view.bounds;
     self.tableView = [[YFJLeftSwipeDeleteTableView alloc] initWithFrame:frame];
