@@ -11,7 +11,7 @@
 #import <objc/runtime.h>
 
 const static CGFloat kDeleteButtonWidth = 320.0f;
-const static CGFloat kDeleteButtonHeight = 44.f;
+const static CGFloat kDeleteButtonHeight = 44.0f;
 
 #define screenWidth() (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ? [[UIScreen mainScreen] bounds].size.width : [[UIScreen mainScreen] bounds].size.height)
 

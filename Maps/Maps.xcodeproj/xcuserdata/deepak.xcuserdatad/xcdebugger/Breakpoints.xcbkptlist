@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "394372453.438439"
+         timestampString = "396943131.970056"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "457"
-         endingLineNumber = "457"
+         startingLineNumber = "462"
+         endingLineNumber = "462"
          landmarkName = "-mapView:annotationView:calloutAccessoryControlTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "394171779.130782"
+         timestampString = "396943131.970056"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "250"
-         endingLineNumber = "250"
+         startingLineNumber = "255"
+         endingLineNumber = "255"
          landmarkName = "-favouiteButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "394172603.919611"
+         timestampString = "396943131.970056"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "195"
-         endingLineNumber = "195"
+         startingLineNumber = "200"
+         endingLineNumber = "200"
          landmarkName = "-mechanicButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "394172605.087757"
+         timestampString = "396943131.970056"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "171"
-         endingLineNumber = "171"
+         startingLineNumber = "176"
+         endingLineNumber = "176"
          landmarkName = "-coffeeButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Maps/ViewController.m"
-         timestampString = "394172607.103529"
+         timestampString = "396943131.970056"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "146"
-         endingLineNumber = "146"
+         startingLineNumber = "151"
+         endingLineNumber = "151"
          landmarkName = "-restaurantButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>

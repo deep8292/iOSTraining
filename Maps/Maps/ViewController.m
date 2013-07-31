@@ -24,6 +24,9 @@
 @property (strong,nonatomic)NSMutableArray *placeLongitudeArray;
 
 @property (strong,nonatomic)NSMutableArray *savedArray;
+
+@property (nonatomic)BOOL flipped;
+
 @end
 
 
@@ -52,6 +55,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.flipped = NO;
     
     self.placeNameArray = [[NSMutableArray alloc]init];
     self.placeLatitudeArray= [[NSMutableArray alloc]init];
@@ -532,14 +537,29 @@
 #pragma mark - Search Bar
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar   
-{   self.table.hidden = FALSE;
-    restaurantButton.hidden = TRUE;
-    coffeshopButton.hidden = TRUE;
-    mechanicButton.hidden = TRUE;
-    favouriteButton.hidden = TRUE;
-    self.mapView.hidden = TRUE;
+{
+//    self.table.hidden = FALSE;
+//    restaurantButton.hidden = TRUE;
+//    coffeshopButton.hidden = TRUE;
+//    mechanicButton.hidden = TRUE;
+//    favouriteButton.hidden = TRUE;
+//    self.mapView.hidden = TRUE;
     
     _table.scrollEnabled = NO;
+    
+    
+    [UIView transitionWithView:self.table duration:1 options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
+        
+        if (!self.flipped) {
+            self.table.hidden = FALSE;
+            restaurantButton.hidden = TRUE;
+            coffeshopButton.hidden = TRUE;
+            mechanicButton.hidden = TRUE;
+            favouriteButton.hidden = TRUE;
+            self.mapView.hidden = TRUE;
+        }
+        
+    }completion:nil];
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
@@ -550,12 +570,25 @@
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
     [self.searchBar resignFirstResponder];
-    self.table.hidden = TRUE;
-    self.mapView.hidden = FALSE;
-    restaurantButton.hidden = FALSE;
-    coffeshopButton.hidden = FALSE;
-    mechanicButton.hidden = FALSE;
-    favouriteButton.hidden = FALSE;
+//    self.table.hidden = TRUE;
+//    self.mapView.hidden = FALSE;
+//    restaurantButton.hidden = FALSE;
+//    coffeshopButton.hidden = FALSE;
+//    mechanicButton.hidden = FALSE;
+//    favouriteButton.hidden = FALSE;
+    [UIView transitionWithView:self.mapView duration:1 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+        
+        if (!self.flipped) {
+            self.table.hidden = TRUE;
+            self.mapView.hidden = FALSE;
+            restaurantButton.hidden = FALSE;
+            coffeshopButton.hidden = FALSE;
+            mechanicButton.hidden = FALSE;
+            favouriteButton.hidden = FALSE;
+        }
+        
+    }completion:nil];
+
 }
 
 
